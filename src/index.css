@@ -85,7 +85,7 @@ a {
 
 /* Both Pages */
 .page {
-  height: calc(100vh - var(--navbar-height));
+  min-height: calc(100vh - var(--navbar-height));
 }
 .container {
   padding: 0 1rem;
@@ -133,10 +133,14 @@ table {
 .score {
   justify-content: center;
 }
+.table-row__frames {  
+  width: 806px;
+}
 .table-row__frames-list {
   display: flex;
   flex-direction: row;
   height: var(--table-row-height);
+  max-width: fit-content;
 }
 .table-row__frame {
   display: grid;
