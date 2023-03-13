@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  /* For debugging only */
+  /* outline: 1px solid red; */
+}
+
 :root {
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   --white-000: rgba(255, 255, 255, 1);
@@ -40,9 +46,11 @@
   /* Document styles */
   --background: var(--white-100);
   color: var(--grey-700);
+  background-color: var(--background);
 
   /* Size Variables */
   --navbar-height: 80px;
+  --table-row-height: 85px;
 }
 
 .navbar {
@@ -51,9 +59,12 @@
   height: var(--navbar-height);
 }
 
+h1, h2, h3 {
+  font-weight: 600;
+}
+
 h1 {
   font-size: var(--header-2);
-  font-weight: 600;
   text-shadow: 
     2px 2px var(--background),
     -2px 2px var(--background);
@@ -62,7 +73,10 @@ h1 {
 
 h2 {
   font-size: var(--header-4);
-  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--header-5);
 }
 
 .upload-page__button {
@@ -80,4 +94,67 @@ a {
 
 .container {
   padding: 0 1rem;
+}
+
+.table-row {
+  height: var(--table-row-height);
+}
+
+.table-row__frame {
+  display: grid;
+  grid-template-areas: 
+    "roll-1 roll-2"
+    "frame-result";
+  grid-template-columns: auto;
+  grid-template-rows: 32px auto;
+  gap: 0;
+  width: 77px;
+  border-left: 1px solid var(--grey-300);
+  padding: 0 4px;
+}
+.table-row__frame--last {
+  width: 113px;
+}
+
+.table-row__frame > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--grey-500);
+}
+
+.roll {  
+  position: relative;
+  background-color: var(--white-150);
+  width: 32px;
+  padding: 3px;
+  text-align: center;
+}
+
+.frame__result {
+  text-align: center;
+  font-size: 28px;
+  transform: translateY(6px);
+}
+
+.strike {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--grey-300-transparent);
+  mix-blend-mode: multiply;
+}
+.spare {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  width: 0; 
+  height: 0; 
+  border-left: 16px solid transparent;
+  border-right: 16px solid var(--grey-300-transparent);
+  border-top: 16px solid transparent;  
+  border-bottom: 16px solid var(--grey-300-transparent);
+  mix-blend-mode: multiply;
 }
