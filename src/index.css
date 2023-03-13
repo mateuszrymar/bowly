@@ -2,6 +2,200 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  /* For debugging only */
+  /* outline: 1px solid red; */
+}
+
 :root {
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  --white-000: rgba(255, 255, 255, 1);
+  --white-050: rgba(251, 251, 253, 1);
+  --white-100: rgba(245, 245, 247, 1);
+  --white-150: rgba(230, 230, 232, 1);
+  --white-200: rgba(225, 225, 225, 1);
+  --grey-100: rgba(210, 210, 215, 1);
+  --grey-300: rgba(180, 180, 185, 1);
+  --grey-300-transparent: rgba(180, 180, 185, 0.5);
+  --grey-500: rgba(110, 110, 115, 1);
+  --grey-700: rgba(40, 40, 42, 1);
+  --grey-700-transparent: rgba(40, 40, 42, 0.5);
+  --grey-800: rgba(29, 29, 31, 1);
+  --blue-500: rgba(26, 188, 250, 1);
+  --blue-700: rgba(28, 125, 243, 1);
+  --blue-800: rgba(0, 102, 204, 1);
+  --blue-950: rgba(7, 7, 14, 1);
+  --blue-gradient: linear-gradient(160deg, var(--blue-700) 0%, var(--blue-500) 100%);;
+  --green-400: rgba(164, 222, 41, 1);
+  --green-500: rgba(142, 198, 24, 1);
+  --green-600: rgba(130, 184, 15, 1);
+
+  /* Text-size styles */
+  /* base size: body (19px) */
+  --header-1: 3.79rem;
+  --header-2: 3.16rem;
+  --header-3: 2.53rem;
+  --header-4: 1.89rem;
+  --header-5: 1.47rem;
+  --header-6: 1.11rem;
+  --body: 1rem;
+  font-size: 19px;
+
+  /* Document styles */
+  --background: var(--white-100);
+  color: var(--grey-700);
+  background-color: var(--background);
+
+  /* Size Variables */
+  --navbar-height: 80px;
+  --table-row-height: 85px;
+}
+
+/* Headers */
+h1, h2, h3 {
+  font-weight: 600;
+}
+h1 {
+  font-size: var(--header-2);
+  text-shadow: 
+    2px 2px var(--background),
+    -2px 2px var(--background);
+  transform: translateY(13px);
+}
+h2 {
+  font-size: var(--header-4);
+}
+h3 {
+  font-size: var(--header-5);
+}
+
+/* Navbar */
+.navbar {
+  border: 1px solid var(--grey-300);
+  border-width: 0 0 1px 0;
+  height: var(--navbar-height);
+}
+
+/* Links */
+a {
+  color: var(--blue-700);
+}
+
+/* Both Pages */
+.page {
+  min-height: calc(100vh - var(--navbar-height));
+}
+.container {
+  padding: 0 1rem;
+}
+.container--no-padding {
+  padding: 0;
+}
+
+/* Upload Page */
+.upload-page__button {
+  background: var(--blue-gradient);
+  color: var(--background);
+}
+
+/* Results Page */
+/* Table Head */
+.table__head {
+  height: calc(var(--table-row-height) - 1rem);
+  border-top: 0.5rem solid var(--white-150);
+  border-bottom: 0.5rem solid var(--white-150);
+}
+.table__head > tr > td, .player {
+  border-right: 1px solid var(--grey-300);
+}
+.table__head > tr > td, .player, .score {
+  height: var(--table-row-height);
+  padding: 0 1rem;
+}
+.table__head > tr > td:last-child {
+  border-right: none;
+}
+
+/* Table Rows */
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+.table-rows {
+  min-height: var(--table-row-height);
+}
+.player, .score {
+  display: flex;
+  align-items: center;
+}
+.score {
+  justify-content: center;
+}
+.table-row__frames {  
+  width: 806px;
+}
+.table-row__frames-list {
+  display: flex;
+  flex-direction: row;
+  height: var(--table-row-height);
+  max-width: fit-content;
+}
+.table-row__frame {
+  display: grid;
+  grid-template-areas: 
+    "roll-1 roll-2"
+    "frame-result";
+  grid-template-columns: auto;
+  grid-template-rows: 32px auto;
+  gap: 0;
+  width: 77px;
+  height: 100%;
+  border-left: 1px solid var(--grey-300);
+  padding: 0 4px;
+}
+.table-row__frame--last {
+  width: 113px;
+}
+.table-row__frame > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--grey-500);
+}
+.roll {  
+  position: relative;
+  background-color: var(--white-150);
+  width: 32px;
+  padding: 3px;
+  text-align: center;
+}
+.frame__result {
+  text-align: center;
+  font-size: 28px;
+  transform: translateY(6px);
+}
+
+/* Special roll indicators */
+.strike {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--grey-300-transparent);
+  mix-blend-mode: multiply;
+}
+.spare {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  width: 0; 
+  height: 0; 
+  border-left: 16px solid transparent;
+  border-right: 16px solid var(--grey-300-transparent);
+  border-top: 16px solid transparent;  
+  border-bottom: 16px solid var(--grey-300-transparent);
+  mix-blend-mode: multiply;
 }
