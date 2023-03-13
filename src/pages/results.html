@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/dist/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <title>bowly</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container mx-auto">
+        <h1 class="navbar__header">Bowly.</h1>
+      </div>
+    </nav>
+
+    <main 
+      class="table-page page container mx-auto flex flex-col items-center"
+      style="display: flex;"
+    >
+
+      <section class="mt-[80px] w-full relative w-full overflow-x-scroll">        
+        <table class="table w-full overflow-x-scroll">
+          <thead class="table__head bg-white_150 font-light text-[28px] text-center">
+            <tr>
+              <td>
+                <span class="head__label">Player</span>
+              </td>
+              <td>
+                <span class="head__label">Score</span>                
+              </td>
+              <td>
+                <span class="head__label">Results</span>
+              </td>
+            </tr>
+          </thead>
+          <tbody class="">
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Jim</h3></td>
+              <td><h3 class="row-1__score score">1050</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Michael Scott</h3></td>
+              <td><h3 class="row-1__score score">105</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Jim</h3></td>
+              <td><h3 class="row-1__score score">1050</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Michael Scott</h3></td>
+              <td><h3 class="row-1__score score">105</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Jim</h3></td>
+              <td><h3 class="row-1__score score">1050</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Michael Scott</h3></td>
+              <td><h3 class="row-1__score score">105</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Jim</h3></td>
+              <td><h3 class="row-1__score score">1050</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Michael Scott</h3></td>
+              <td><h3 class="row-1__score score">105</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Jim</h3></td>
+              <td><h3 class="row-1__score score">1050</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Michael Scott</h3></td>
+              <td><h3 class="row-1__score score">105</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Jim</h3></td>
+              <td><h3 class="row-1__score score">1050</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr class="table__row-1 table-rows">
+              <td><h3 class="row-1__player player">Michael Scott</h3></td>
+              <td><h3 class="row-1__score score">105</h3></td>
+              <td class="table-row__frames">
+                <ul class="table-row__frames-list">
+                  <li class="table-row__frame">
+                    <div class="frame__rolls">
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame">
+                    <div>
+                      <span class="roll">10<div class="strike"></div></span>
+                      <span class="roll"><div class="strike"></div></span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                  <li class="table-row__frame--last table-row__frame">
+                    <div>
+                      <span class="roll">8</span>
+                      <span class="roll">2<div class="spare"></div></span>
+                      <span class="roll">2</span>
+                    </div>
+                    <p class="frame__result">16</p>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <footer class="w-full h-[85px] bg-white_150 flex justify-center items-center">
+        <p>
+          <a href="../../index.html">Load another file</a>
+        </p>
+      </footer>
+    </main>
+
+
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>
