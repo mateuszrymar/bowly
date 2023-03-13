@@ -21,6 +21,7 @@
   --blue-700: rgba(28, 125, 243, 1);
   --blue-800: rgba(0, 102, 204, 1);
   --blue-950: rgba(7, 7, 14, 1);
+  --blue-gradient: linear-gradient(160deg, var(--blue-700) 0%, var(--blue-500) 100%);;
   --green-400: rgba(164, 222, 41, 1);
   --green-500: rgba(142, 198, 24, 1);
   --green-600: rgba(130, 184, 15, 1);
@@ -59,4 +60,13 @@ h1 {
 h2 {
   font-size: var(--header-4);
   font-weight: 600;
+}
+
+.upload-page__button {
+  background: var(--blue-gradient);
+  color: var(--background);
+}
+
+a {
+  color: var(--blue-700);
 }

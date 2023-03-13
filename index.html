@@ -17,10 +17,15 @@
       </div>
     </nav>
 
-    <main class="upload-page container mx-auto">
-      <h2 class="upload-page__hero-message">Bowly creates ten-pin bowling scorecards.</h2>
-      <button class="upload-page__button">Upload your file</button>
-      <p class="upload-page__file-description">
+    <main class="upload-page container mx-auto flex flex-col items-center">
+      <h2 class="upload-page__hero-message text-center mt-[40vh] mb-[20vh]">Bowly creates ten-pin bowling scorecards.</h2>
+      <button class="upload-page__button h-[60px] w-[320px] px-[14px] mb-4 rounded-full flex items-center justify-between">
+        <span class="text-[50px] font-extralight grow-0 translate-y-[-4px]">+</span>
+        <div class="flex grow justify-center translate-y-[2px]">
+          <span class="font-medium">Upload your file</span>
+        </div>
+      </button>
+      <p class="upload-page__file-description text-center">
         We support .txt files<br>
         not larger than 1mb<br>
         <a class="upload-page__file-description--link">download example</a>
