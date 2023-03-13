@@ -23,6 +23,6 @@ const init = (() => {
   addUploadListener();  
 })();
 
-const nowDoSomethingWithData = ( text: string) => {
-  console.log('we cauht it here: ', text);  
+const nowDoSomethingWithData = ( text: object[] ) => {
+  console.log('We caught it in index.html: ', text );
 }

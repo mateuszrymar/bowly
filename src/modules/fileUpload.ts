@@ -1,3 +1,7 @@
+interface PlayerRolls {
+  name: string;
+  rolls: number[];
+};
 
 const maxFileSize: number = 1e6; // in bytes.
 
@@ -9,12 +13,27 @@ const getFileFromInput = (file: File): Promise<any> => {
       reader.onload = function () { 
         resolve(reader.result);
       };
-      reader.readAsText(file); // here the file can be read in different way Text, DataUrl, ArrayBuffer
+      reader.readAsText(file);
   });
-
 }
 
-const validateUploadedFile = ( text: String, file: File ) => {  
+const getNamesAndResults = ( text: string ) => {
+  const textCopy = `${text}`;  
+  const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| ]+)/gm);
+  const matchArray = [...textCopy.matchAll(regEx)];
+  const allPlayerRolls: PlayerRolls[] = [];
+
+  matchArray.forEach(element => {
+    allPlayerRolls.push({ 
+      name: element[1], 
+      rolls: element[2].replace(/\s+/g, '').split(',').map(numAsString => Number(numAsString))
+    });
+  });
+  
+  return allPlayerRolls;
+};
+
+const validateUploadedFile = ( text: string, file: File ) => {  
   
   // We check the file size:
   if ( text.length > maxFileSize ) throw new Error( "File's too large." )
@@ -26,8 +45,12 @@ const validateUploadedFile = ( text: String, file: File ) => {
   else console.log( `The file extension is ${extension}. It's OK.` );
 
   // We check if the text has any matches:
-  console.log(text)
-  
+  // console.log(text);
+  const matches = getNamesAndResults( text );
+  if ( matches.length > 0) console.log( `Found ${matches.length} matches. It's OK.` )
+  else throw new Error( "No matches found." ); 
+
+  return matches;
 }
 
 export const processUpload = async (event: Event ) => {
@@ -35,16 +58,8 @@ export const processUpload = async (event: Event ) => {
   const file = event.target?.files[0];
 
   const result = getFileFromInput( file );
-  validateUploadedFile( await result, file);
-  // try {    
-  //   manageUploadedFile( await result, file);
-  // } catch (error) {
-  //   // Here we can display error messages:
-  //   console.log(error);  
-  // } finally {
-  //   console.log( await result);
-  // }
-  
-  console.log( 'will it run after error?');
-  return await result;
+  const namesAndResults = validateUploadedFile( await result, file);
+  // console.log( 'names results', namesAndResults );
+
+  return namesAndResults;
 }
