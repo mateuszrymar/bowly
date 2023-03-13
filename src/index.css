@@ -4,4 +4,59 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  --white-000: rgba(255, 255, 255, 1);
+  --white-050: rgba(251, 251, 253, 1);
+  --white-100: rgba(245, 245, 247, 1);
+  --white-150: rgba(230, 230, 232, 1);
+  --white-200: rgba(225, 225, 225, 1);
+  --grey-100: rgba(210, 210, 215, 1);
+  --grey-300: rgba(180, 180, 185, 1);
+  --grey-300-transparent: rgba(180, 180, 185, 0.5);
+  --grey-500: rgba(110, 110, 115, 1);
+  --grey-700: rgba(40, 40, 42, 1);
+  --grey-700-transparent: rgba(40, 40, 42, 0.5);
+  --grey-800: rgba(29, 29, 31, 1);
+  --blue-500: rgba(26, 188, 250, 1);
+  --blue-700: rgba(28, 125, 243, 1);
+  --blue-800: rgba(0, 102, 204, 1);
+  --blue-950: rgba(7, 7, 14, 1);
+  --green-400: rgba(164, 222, 41, 1);
+  --green-500: rgba(142, 198, 24, 1);
+  --green-600: rgba(130, 184, 15, 1);
+
+  /* Text-size styles */
+  /* base size: body (19px) */
+  --header-1: 3.79rem;
+  --header-2: 3.16rem;
+  --header-3: 2.53rem;
+  --header-4: 1.89rem;
+  --header-5: 1.47rem;
+  --header-6: 1.11rem;
+  --body: 1rem;
+  font-size: 19px;
+
+  /* Document styles */
+  --background: var(--white-100);
+  color: var(--grey-700);
+}
+
+.navbar {
+  border: 1px solid var(--grey-300);
+  border-width: 0 0 1px 0;
+  height: 80px;
+}
+
+h1 {
+  font-size: var(--header-2);
+  font-weight: 600;
+  text-shadow: 
+    2px 2px var(--background),
+    -2px 2px var(--background);
+  transform: translateY(13px);
+}
+
+h2 {
+  font-size: var(--header-4);
+  font-weight: 600;
 }
