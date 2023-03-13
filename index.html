@@ -11,11 +11,20 @@
     <title>bowly</title>
   </head>
   <body>
-    <div id="app">
-      <h1 class="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+    <nav class="navbar">
+      <h1 class="navbar__header">Bowly.</h1>
+    </nav>
+
+    <main class="upload-page">
+      <h2 class="upload-page__hero-message">Bowly creates ten-pin bowling scorecards.</h2>
+      <button class="upload-page__button">Upload your file</button>
+      <p class="upload-page__file-description">
+        We support .txt files<br>
+        not larger than 1mb<br>
+        <a class="upload-page__file-description--link">download example</a>
+      </p>
+    </main>
+
     <script type="module" src="/src/index.ts"></script>
   </body>
 </html>
