@@ -40,12 +40,15 @@
   /* Document styles */
   --background: var(--white-100);
   color: var(--grey-700);
+
+  /* Size Variables */
+  --navbar-height: 80px;
 }
 
 .navbar {
   border: 1px solid var(--grey-300);
   border-width: 0 0 1px 0;
-  height: 80px;
+  height: var(--navbar-height);
 }
 
 h1 {
@@ -69,4 +72,12 @@ h2 {
 
 a {
   color: var(--blue-700);
+}
+
+.page {
+  height: calc(100vh - var(--navbar-height));
+}
+
+.container {
+  padding: 0 1rem;
 }
