@@ -53,16 +53,10 @@
   --table-row-height: 85px;
 }
 
-.navbar {
-  border: 1px solid var(--grey-300);
-  border-width: 0 0 1px 0;
-  height: var(--navbar-height);
-}
-
+/* Headers */
 h1, h2, h3 {
   font-weight: 600;
 }
-
 h1 {
   font-size: var(--header-2);
   text-shadow: 
@@ -70,36 +64,80 @@ h1 {
     -2px 2px var(--background);
   transform: translateY(13px);
 }
-
 h2 {
   font-size: var(--header-4);
 }
-
 h3 {
   font-size: var(--header-5);
 }
 
+/* Navbar */
+.navbar {
+  border: 1px solid var(--grey-300);
+  border-width: 0 0 1px 0;
+  height: var(--navbar-height);
+}
+
+/* Links */
+a {
+  color: var(--blue-700);
+}
+
+/* Both Pages */
+.page {
+  height: calc(100vh - var(--navbar-height));
+}
+.container {
+  padding: 0 1rem;
+}
+.container--no-padding {
+  padding: 0;
+}
+
+/* Upload Page */
 .upload-page__button {
   background: var(--blue-gradient);
   color: var(--background);
 }
 
-a {
-  color: var(--blue-700);
+/* Results Page */
+/* Table Head */
+.table__head {
+  height: calc(var(--table-row-height) - 1rem);
+  border-top: 0.5rem solid var(--white-150);
+  border-bottom: 0.5rem solid var(--white-150);
 }
-
-.page {
-  height: calc(100vh - var(--navbar-height));
+.table__head > tr > td, .player {
+  border-right: 1px solid var(--grey-300);
 }
-
-.container {
+.table__head > tr > td, .player, .score {
+  height: var(--table-row-height);
   padding: 0 1rem;
 }
-
-.table-row {
-  height: var(--table-row-height);
+.table__head > tr > td:last-child {
+  border-right: none;
 }
 
+/* Table Rows */
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+.table-rows {
+  min-height: var(--table-row-height);
+}
+.player, .score {
+  display: flex;
+  align-items: center;
+}
+.score {
+  justify-content: center;
+}
+.table-row__frames-list {
+  display: flex;
+  flex-direction: row;
+  height: var(--table-row-height);
+}
 .table-row__frame {
   display: grid;
   grid-template-areas: 
@@ -109,20 +147,19 @@ a {
   grid-template-rows: 32px auto;
   gap: 0;
   width: 77px;
+  height: 100%;
   border-left: 1px solid var(--grey-300);
   padding: 0 4px;
 }
 .table-row__frame--last {
   width: 113px;
 }
-
 .table-row__frame > div {
   display: flex;
   justify-content: space-between;
   width: 100%;
   color: var(--grey-500);
 }
-
 .roll {  
   position: relative;
   background-color: var(--white-150);
@@ -130,13 +167,13 @@ a {
   padding: 3px;
   text-align: center;
 }
-
 .frame__result {
   text-align: center;
   font-size: 28px;
   transform: translateY(6px);
 }
 
+/* Special roll indicators */
 .strike {
   position: absolute;
   width: 100%;
