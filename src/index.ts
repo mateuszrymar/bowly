@@ -1,8 +1,11 @@
 import './index.css';
+// import './results';
 import { cloneDeep } from 'lodash-es';
 
 import { processUpload } from './modules/fileUpload';
 import { getAllPlayerResults } from './modules/calculateResults';
+import { deepClone } from '@vitest/utils';
+
 
 
 interface PlayerRolls {
@@ -10,10 +13,25 @@ interface PlayerRolls {
   rolls: number[];
 };
 
+interface FrameInt {
+  frameId: number;
+  rolls: number[];
+  isStrike: boolean;
+  isSpare: boolean;
+  pointResult: number;
+}
+
+interface PlayerInt {
+  name: string;
+  result: number | null;
+  frames: FrameInt[];
+}
+
+
+
 // DOM Elements:
 const uploadButton = document.querySelector('.upload-page__button');
 const uploadInput: HTMLInputElement | null = document.querySelector('.upload-page__input');
-
 
 const addUploadListener = () => {  
   uploadButton?.addEventListener('click', (event) => {
@@ -33,6 +51,14 @@ const addUploadListener = () => {
   addUploadListener();  
 })();
 
+const saveToSessionStorage = ( data: PlayerInt[] ) => {
+  console.log( 'ready for saving: ', data );
+  const dataCopy = deepClone( data );
+  const json = JSON.stringify( dataCopy );
+
+  window.sessionStorage.setItem( 'playerResults', json );
+}
+
 const redirectToResultsPage = () => {
   const newLocation = `${window.location.origin}/results.html`
   window.location.replace(newLocation);
@@ -46,6 +72,9 @@ const processPlayerEntries = ( text: PlayerRolls[] ) => {
   const playerResults = getAllPlayerResults( playerEntries );
   console.log(playerResults);
 
+  // now we can save player results to sessionstorage
+  saveToSessionStorage( playerResults );
+
   // now we can switch to results.html
-  // redirectToResultsPage();
+  redirectToResultsPage();  
 }
