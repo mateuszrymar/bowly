@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, isEmpty } from 'lodash-es';
 
 /*
   This module calculates the results in a similar way to how a person would do it:
@@ -32,6 +32,29 @@ interface PlayerRolls {
   rolls: number[];
 };
 
+export const isAnyFrameFilled = ( frames :number[][] ) => {
+  const framesToCheck = cloneDeep( frames );
+
+  if ( isEmpty( framesToCheck.flat() )) return false;
+  else return true;
+};
+
+export const isAnyFrameOverPointLimit = ( frames :number[][] ) => {
+  console.log('testing!');
+  
+  // const framesToCheck = cloneDeep( frames );
+  // console.log('checked',framesToCheck);  
+
+  return true;
+};
+
+export const validateFrames = ( frames :number[][] ) => {
+  const framesToCheck = cloneDeep( frames );
+  console.log('validation is running.')
+  if ( isAnyFrameFilled( framesToCheck ) === false ) return false
+  if ( isAnyFrameOverPointLimit( framesToCheck ) === false ) return false
+  else return true;
+};
 
 export const divideIntoFrames = ( arrayToPartition: number[] ) => {
   let arrayByFrames: number[][] = [];
@@ -69,15 +92,15 @@ export const divideIntoFrames = ( arrayToPartition: number[] ) => {
   return arrayByFrames;
 };
 
-
 const getSinglePlayerResults = ( onePlayerData: PlayerRolls ) => {
   const singlePlayerData = cloneDeep( onePlayerData );
   const playerRolls = singlePlayerData.rolls;
   const playerFrames = divideIntoFrames( playerRolls );
+  // Here we validate frames.
+  const areFramesValid = validateFrames( playerFrames );
 
-  console.log( playerFrames );  
+  console.log( areFramesValid );  
 };
-
 
 
 export const getAllPlayerResults = ( playerData: PlayerRolls[] ) => {
