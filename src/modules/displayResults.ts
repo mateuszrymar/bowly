@@ -20,40 +20,82 @@ const tableBody = document.querySelector('.table__body');
 console.log(tableBody);
 
 
-const typicalFrameTemplate = `
-<li class="table-row__frame">
-  <div class="frame__rolls">
-    <span class="roll">8</span>
-    <span class="roll">2<div class="spare"></div></span>
-  </div>
-  <p class="frame__result">16</p>
-</li>
-`;
+const typicalFrameTemplate = ( playerFrames: FrameInt ) => {
+  const playerFramesCopy = cloneDeep( playerFrames );
 
-const lastFrameTemplate = `
-<li class="table-row__frame--last table-row__frame">
-  <div>
-    <span class="roll">8</span>
-    <span class="roll">2<div class="spare"></div></span>
-    <span class="roll">2</span>
-  </div>
-  <p class="frame__result">16</p>
-</li>
-`;
+  const rolls = playerFramesCopy.rolls;
+  const pointResult = playerFramesCopy.pointResult;
+  const isStrike = playerFramesCopy.isStrike;
+  const isSpare = playerFramesCopy.isSpare;
 
-const createFrameList = () => {
-  return`
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${typicalFrameTemplate}
-        ${lastFrameTemplate}      
+  const roll_1 = rolls[0];
+  const roll_2 = (rolls[1] !== undefined) ? rolls[1] : ``;
+  let strikeDiv: string;
+  let spareDiv: string;
+
+  isStrike ? strikeDiv = `<div class="strike"></div>` : strikeDiv = ``;
+  isSpare ? spareDiv = `<div class="spare"></div>` : spareDiv = ``;
+
+  return `
+  <li class="table-row__frame">
+    <div class="frame__rolls">
+      <span class="roll">${roll_1}${strikeDiv}</span>
+      <span class="roll">${roll_2}${strikeDiv}${spareDiv}</div></span>
+    </div>
+    <p class="frame__result">${pointResult}</p>
+  </li>
   `;
+}
+
+const lastFrameTemplate = ( playerFrames: FrameInt ) => {
+  const playerFramesCopy = cloneDeep( playerFrames );
+
+  const rolls = playerFramesCopy.rolls;
+  const pointResult = playerFramesCopy.pointResult;
+  const isStrike = playerFramesCopy.isStrike;
+  const isSpare = playerFramesCopy.isSpare;
+
+  const roll_1 = rolls[0];
+  const roll_2 = (rolls[1] !== undefined) ? rolls[1] : ``;
+  const roll_3 = (rolls[2] !== undefined) ? rolls[2] : ``;
+  let strikeDiv: string;
+  let spareDiv: string;
+
+  isStrike ? strikeDiv = `<div class="strike"></div>` : strikeDiv = ``;
+  isSpare ? spareDiv = `<div class="spare"></div>` : spareDiv = ``;
+
+  return `
+    <li class="table-row__frame--last table-row__frame">
+      <div>
+        <span class="roll">${roll_1}${strikeDiv}</span>
+        <span class="roll">${roll_2}${strikeDiv}${spareDiv}</span>
+        <span class="roll">${roll_3}${strikeDiv}</span>
+      </div>
+      <p class="frame__result">${pointResult}</p>
+    </li>
+  `;
+}
+
+const createFrameList = ( playerFrames: FrameInt[] ) => {
+  const playerFramesCopy = cloneDeep( playerFrames );
+  let allPlayerFrames = ``;
+
+  for (let i = 0; i < 10; i++) {
+    const currentFrame = playerFramesCopy[i];
+
+    if ( i < 9 ) {
+      const frame = typicalFrameTemplate( currentFrame );
+      allPlayerFrames += frame;
+    } else {
+      const frame = lastFrameTemplate( currentFrame );
+      allPlayerFrames += frame;
+    }
+  }
+
+  // console.log(allPlayerFrames);
+  
+
+  return`${allPlayerFrames}`;
 } 
 
 const createTableRow = ( playerData: PlayerInt ) => {
