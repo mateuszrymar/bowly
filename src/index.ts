@@ -1,6 +1,14 @@
 import './index.css';
-import { processUpload } from './modules/fileUpload';
+import { cloneDeep } from 'lodash-es';
 
+import { processUpload } from './modules/fileUpload';
+import { getAllPlayerResults } from './modules/calculateResults';
+
+
+interface PlayerRolls {
+  name: string;
+  rolls: number[];
+};
 
 // DOM Elements:
 const uploadButton = document.querySelector('.upload-page__button');
@@ -14,9 +22,9 @@ const addUploadListener = () => {
   })
 
   // @TODO This type check on the event is tricky:
-  uploadInput?.addEventListener('change', async (event: any ) => {
+  uploadInput?.addEventListener('change', async ( event: any ) => {
     const uploadedText = processUpload( event );
-    processTextEntries( await uploadedText );
+    processPlayerEntries( await uploadedText );
   })
 }
 
@@ -30,13 +38,16 @@ const redirectToResultsPage = () => {
   window.location.replace(newLocation);
 }
 
-const processTextEntries = ( text: object[] ) => {
-  console.log('We caught it in index.html: ', text );
-
+const processPlayerEntries = ( text: PlayerRolls[] ) => {
+  // console.log('We caught it in index.html: ', text );
+  const playerEntries: PlayerRolls[] = cloneDeep(text);
+  
   // @TODO Here we'll process text entries into frames
+  const playerResults = getAllPlayerResults( playerEntries );
+  console.log(playerResults);
 
   // @TODO Validation will be handled in an external module. 
 
   // now we can switch to results.html
-  redirectToResultsPage();
+  // redirectToResultsPage();
 }
