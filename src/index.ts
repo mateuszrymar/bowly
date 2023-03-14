@@ -46,8 +46,6 @@ const processPlayerEntries = ( text: PlayerRolls[] ) => {
   const playerResults = getAllPlayerResults( playerEntries );
   console.log(playerResults);
 
-  // @TODO Validation will be handled in an external module. 
-
   // now we can switch to results.html
   // redirectToResultsPage();
 }

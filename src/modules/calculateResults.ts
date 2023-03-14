@@ -28,7 +28,7 @@ import { cloneDeep, isEmpty, sum } from 'lodash-es';
   9. We return data from previous step.
 */
 
-interface PlayerRolls {
+interface PlayerRollsInt {
   name: string;
   rolls: number[];
 };
@@ -43,9 +43,8 @@ interface FrameInt {
 
 interface PlayerInt {
   name: string;
-  result: number;
+  result: number | null;
   frames: FrameInt[];
-  isResultValid: boolean;
 }
 
 // 
@@ -199,7 +198,7 @@ class Frame {
   }
 }
 
-const processFrames = ( partitionedArray: number[][] ) => {
+export const processFrames = ( partitionedArray: number[][] ) => {
   const arrayCopy = [...partitionedArray];
   let resultArray: FrameInt[] = [];
 
@@ -212,43 +211,45 @@ const processFrames = ( partitionedArray: number[][] ) => {
   return resultArray;
 }
 
-class Player {
+export class Player {
+  name: string;
+  result: number | null;
+  frames: FrameInt[];
 
+  constructor ( playerData: PlayerRollsInt ) {
+    const singlePlayerData = cloneDeep( playerData );
+    const playerName = singlePlayerData.name;
+    const playerRolls = singlePlayerData.rolls;
+    let result: number | null;
+    let frames: FrameInt[];
+
+    // First, we divide rolls into frames:
+    const playerFrames = divideIntoFrames( playerRolls );
+
+    // Then we validate and process frames:
+    const areFramesValid = validateFrames( playerFrames );
+    if (areFramesValid === true) {
+      frames = processFrames( playerFrames );
+      result = sum(frames.map((frame) => frame.pointResult));
+    } else {
+      frames = [];
+      result = null;
+    }
+
+    this.name = playerName;
+    this.result = result;
+    this.frames = frames;
+  }
 }
 
-const getSinglePlayerResults = ( onePlayerData: PlayerRolls ) => {
-  const singlePlayerData = cloneDeep( onePlayerData );
-  const playerName = singlePlayerData.name;
-  const playerRolls = singlePlayerData.rolls;
-
-  // First, we're dividing rolls into frames:
-  const playerFrames = divideIntoFrames( playerRolls );
-
-  // Then we validate frames:
-  const areFramesValid = validateFrames( playerFrames );
-  console.log(`${playerName} input valid?` ,areFramesValid);
-
-  // If valid, we can evaluate individual frames:
-  if (areFramesValid === true) {
-    const processed = processFrames( playerFrames );
-
-    console.log(sum(processed.map((frame) => frame.pointResult)));    
-  }
-  // If invalid, push an empty array:
-  else {
-
-  }
-
-};
-
-
-export const getAllPlayerResults = ( playerData: PlayerRolls[] ) => {
+export const getAllPlayerResults = ( playerData: PlayerRollsInt[] ) => {
   const allPlayerData = cloneDeep( playerData );
+  let allPlayerResults: PlayerInt[] = [];
   console.log( 'player data is now in results module:', allPlayerData );
 
   allPlayerData.forEach( player => {
-    getSinglePlayerResults( player );
+    allPlayerResults.push( new Player( player ));
   });
 
-  return allPlayerData;
+  return allPlayerResults;
 };
