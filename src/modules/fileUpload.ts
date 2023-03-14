@@ -3,6 +3,10 @@ interface PlayerRolls {
   rolls: number[];
 };
 
+interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
+
 const maxFileSize: number = 1e6; // in bytes.
 
 const getFileFromInput = (file: File): Promise<any> => {
@@ -53,13 +57,16 @@ const validateUploadedFile = ( text: string, file: File ) => {
   return matches;
 }
 
-export const processUpload = async (event: Event ) => {
+export const processUpload = async (event: HTMLInputEvent ) => {
   console.log('passed to processUpload', event.target?.files );
-  const file = event.target?.files[0];
+  const files: any = event.target?.files;
+  let file: File;
+  
+  if ( files[0] ) { 
+    file = files[0]
+    const result = getFileFromInput( file );
+    const namesAndResults = validateUploadedFile( await result, file);
 
-  const result = getFileFromInput( file );
-  const namesAndResults = validateUploadedFile( await result, file);
-  // console.log( 'names results', namesAndResults );
-
-  return namesAndResults;
+    return namesAndResults;
+  } else return [];
 }
