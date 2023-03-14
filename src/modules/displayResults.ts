@@ -58,13 +58,16 @@ const createFrameList = () => {
 
 const createTableRow = ( playerData: PlayerInt ) => {
   const playerDataCopy = cloneDeep( playerData );
+  const playerName = playerDataCopy.name;
+  const playerScore = playerDataCopy.result;
+  const playerFrames = playerDataCopy.frames;
 
-  const frameList = createFrameList();
+  const frameList = createFrameList( playerFrames );
 
   return`
     <tr class="table__row-1 table-rows">
-      <td><h3 class="row-1__player player">Jim</h3></td>
-      <td><h3 class="row-1__score score">1050</h3></td>
+      <td><h3 class="row-1__player player">${playerName}</h3></td>
+      <td><h3 class="row-1__score score">${playerScore}</h3></td>
       <td class="table-row__frames">
         <ul class="table-row__frames-list">
           ${frameList}
