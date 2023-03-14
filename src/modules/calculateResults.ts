@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash-es';
   This module calculates the results in a similar way to how a person would do it:
   DONE 1. We get the player data from index.ts.
   DONE 2. We take player's rolls array.
-  3. We divide the array into frames. - needs to be unit tested.
+  DONE 3. We divide the array into frames. - needs to be unit tested.
   4. We check if all frames are valid.
   5. We take these frames, and process them into objects, that have following properties:
     - Array with 1 or 2 rolls in the given frame.
@@ -73,8 +73,9 @@ export const divideIntoFrames = ( arrayToPartition: number[] ) => {
 const getSinglePlayerResults = ( onePlayerData: PlayerRolls ) => {
   const singlePlayerData = cloneDeep( onePlayerData );
   const playerRolls = singlePlayerData.rolls;
+  const playerFrames = divideIntoFrames( playerRolls );
 
-  console.log( singlePlayerData.rolls );  
+  console.log( playerFrames );  
 };
 
 
