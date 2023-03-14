@@ -180,9 +180,25 @@ class Frame {
       if ( frameId>=9 ) {
         return directFramePoints;
       } else {
-        let nextResult = allFramesCopy[ frameId+1 ][0];
-        let afterNextResult: number;
-        allFramesCopy[ frameId+1 ][1] ? afterNextResult = allFramesCopy[ frameId+1 ][1] : afterNextResult = allFramesCopy[ frameId+2 ][0];
+        let nextResult: number = 0; 
+        let afterNextResult: number = 0;
+
+        // @TODO Check if you can solve it in a cleaner manner.
+        // We need this check to process early quit games correctly:
+        if ( allFramesCopy[ frameId+1 ] !== undefined) {
+          nextResult = allFramesCopy[ frameId+1 ][0];
+          if ( [ frameId+1 ][1] !== undefined ) {
+            afterNextResult = allFramesCopy[ frameId+1 ][1]
+          } else {
+            if ( allFramesCopy[ frameId+2 ] !== undefined ) {
+              afterNextResult = allFramesCopy[ frameId+2 ][0];
+            } else if( allFramesCopy[ frameId+1 ][2] !== undefined ) {
+              afterNextResult = allFramesCopy[ frameId+1 ][2];
+            } else {
+              afterNextResult = 0;
+            }
+          }
+        } 
 
         if ( isStrike ) return directFramePoints + nextResult + afterNextResult;
         else if ( isSpare ) return directFramePoints + nextResult;
