@@ -37,22 +37,37 @@ const getNamesAndResults = ( text: string ) => {
   return allPlayerRolls;
 };
 
+const displayUploadError = ( message: string ) => {
+
+}
+
+const checkFileSize = ( file: File ) => {
+  if ( file.size > maxFileSize ) throw new Error( "File's too large." )
+  else console.log( `The file size is ${file.size}b. OK.` );
+};
+
+const checkFileExtension = ( file: File ) => {
+  const extension = file.name.split('.')[1];
+
+  if ( extension !== 'txt' ) throw new Error( "Wrong extension." )
+  else console.log( `The file extension is ${extension}. OK.` );
+}
+
+const checkMatches = ( text: string ) => {
+  const matches = getNamesAndResults( text );
+  if ( matches.length > 0) console.log( `Found ${matches.length} matches. OK.` )
+  else throw new Error( "No matches found." ); 
+
+  return matches;
+}
+
 const validateUploadedFile = ( text: string, file: File ) => {  
   
-  // We check the file size:
-  if ( text.length > maxFileSize ) throw new Error( "File's too large." )
-  else console.log( `The file size is ${text.length}. It's OK.` );
-  
-  // We check the file extension:
-  const extension = file.name.split('.')[1];
-  if ( extension !== 'txt' ) throw new Error( "Wrong extension." )
-  else console.log( `The file extension is ${extension}. It's OK.` );
-
-  // We check if the text has any matches:
-  // console.log(text);
-  const matches = getNamesAndResults( text );
-  if ( matches.length > 0) console.log( `Found ${matches.length} matches. It's OK.` )
-  else throw new Error( "No matches found." ); 
+  // This is only basic validation.
+  // More thorough checks are performed in calculateResults module.
+  checkFileSize( file );
+  checkFileExtension( file );
+  const matches = checkMatches( text );
 
   return matches;
 }

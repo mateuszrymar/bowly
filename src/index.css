@@ -8,8 +8,7 @@
 }
 
 :root {
-
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
 
   --white-000: rgba(255, 255, 255, 1);
   --white-050: rgba(251, 251, 253, 1);
@@ -31,6 +30,7 @@
   --green-400: rgba(164, 222, 41, 1);
   --green-500: rgba(142, 198, 24, 1);
   --green-600: rgba(130, 184, 15, 1);
+  --red-600: rgba(212, 89, 81, 1);
 
   /* Text-size styles */
   /* base size: body (19px) */
@@ -54,7 +54,7 @@
 }
 
 /* Headers */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-weight: 600;
 }
 h1 {
@@ -69,6 +69,9 @@ h2 {
 }
 h3 {
   font-size: var(--header-5);
+}
+h4 {
+  font-size: var(--header-6);
 }
 
 /* Navbar */
@@ -175,6 +178,14 @@ table {
   text-align: center;
   font-size: 28px;
   transform: translateY(6px);
+}
+
+/* Errors and  messages */
+.error {
+  color: var(--red-600);
+}
+.upload-page__file-error-msg {
+  min-height: 2rem;
 }
 
 /* Special roll indicators */
