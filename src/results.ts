@@ -31,5 +31,4 @@ const getDataFromSessionStorage = () => {
 }
 
 const playerData = getDataFromSessionStorage();
-
-console.log(playerData);
+displayResults( playerData );
