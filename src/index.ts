@@ -38,5 +38,5 @@ const processTextEntries = ( text: object[] ) => {
   // @TODO Validation will be handled in an external module. 
 
   // now we can switch to results.html
-  // redirectToResultsPage();
+  redirectToResultsPage();
 }

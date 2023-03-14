@@ -1,3 +1,4 @@
+// Interfaces
 interface PlayerRolls {
   name: string;
   rolls: number[];
@@ -7,8 +8,11 @@ interface HTMLInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
 
+// Variables
 const maxFileSize: number = 1e6; // in bytes.
+const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload-page__file-error-msg')
 
+// Functions
 const getFileFromInput = (file: File): Promise<any> => {
 
   return new Promise(function (resolve, reject) {
@@ -38,25 +42,49 @@ const getNamesAndResults = ( text: string ) => {
 };
 
 const displayUploadError = ( message: string ) => {
+  if ( errorMessageBox !== null ) {
+    errorMessageBox.innerHTML = message;
+  } else return;
+}
 
+const clearUploadError = () => {
+  if ( errorMessageBox !== null ) {
+    errorMessageBox.innerHTML = ``;
+  } else return;
 }
 
 const checkFileSize = ( file: File ) => {
-  if ( file.size > maxFileSize ) throw new Error( "File's too large." )
+  const message = "File's too large.";
+  
+  if ( file.size > maxFileSize ) {
+    displayUploadError( message );
+    throw new Error( message );
+  }
   else console.log( `The file size is ${file.size}b. OK.` );
 };
 
 const checkFileExtension = ( file: File ) => {
   const extension = file.name.split('.')[1];
+  const message = "Wrong extension.";
 
-  if ( extension !== 'txt' ) throw new Error( "Wrong extension." )
+  if ( extension !== 'txt' ) {
+    displayUploadError( message );
+    throw new Error( message );
+  }
   else console.log( `The file extension is ${extension}. OK.` );
 }
 
 const checkMatches = ( text: string ) => {
+  const errorMessage = "No matching names and results found.";
   const matches = getNamesAndResults( text );
-  if ( matches.length > 0) console.log( `Found ${matches.length} matches. OK.` )
-  else throw new Error( "No matches found." ); 
+
+  if ( matches.length <= 0) {
+    displayUploadError( errorMessage );
+    throw new Error( errorMessage );
+  } else {
+    clearUploadError();
+    console.log( `Found ${matches.length} matches. OK.` );
+  }
 
   return matches;
 }
