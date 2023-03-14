@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/dist/output.css" rel="stylesheet">
+    <link href="dist/assets/index-9406ba0b.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
         <h2 class="upload-page__hero-message text-center">Bowly creates ten-pin bowling scorecards.</h2>
       </section>
 
-      <section class="grow-[1]">
+      <section class="grow-[1] flex flex-col items-center">
         <input class="upload-page__input" type="file" accept=".txt" multiple="false" style="display: none"/>
         <button class="upload-page__button h-[60px] w-[320px] px-[14px] mb-4 rounded-full flex items-center justify-between">
           <span class="text-[50px] font-extralight grow-0 translate-y-[-4px]">+</span>
@@ -34,10 +34,11 @@
             <span class="font-medium">Upload your file</span>
           </div>
         </button>
+        <h4 class="upload-page__file-error-msg text-center error"></h4>
         <p class="upload-page__file-description text-center text-sm leading-5">
           We support .txt files<br>
           not larger than 1mb.<br>
-          <a href="./src/pages/results.html" class="upload-page__file-description--link">Download example</a>
+          <a href="results.html" class="upload-page__file-description--link">Download example</a>
         </p>
       </section>
 

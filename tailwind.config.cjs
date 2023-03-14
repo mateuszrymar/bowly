@@ -34,6 +34,17 @@ module.exports = {
       paper_light: 'rgba(251, 251, 253, 1)',
       paper_negative: 'rgba(29, 29, 31, 1)',
     },
+    fontWeight: {
+      thin: '100',
+      extralight: '200',
+      light: '300',
+      normal: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700',
+      extrabold: '800',
+      black: '900',
+    },
 
     extend: {},
   },

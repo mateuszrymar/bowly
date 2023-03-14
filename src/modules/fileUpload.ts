@@ -1,10 +1,18 @@
+// Interfaces
 interface PlayerRolls {
   name: string;
   rolls: number[];
 };
 
-const maxFileSize: number = 1e6; // in bytes.
+interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 
+// Variables
+const maxFileSize: number = 1e6; // in bytes.
+const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload-page__file-error-msg')
+
+// Functions
 const getFileFromInput = (file: File): Promise<any> => {
 
   return new Promise(function (resolve, reject) {
@@ -33,33 +41,75 @@ const getNamesAndResults = ( text: string ) => {
   return allPlayerRolls;
 };
 
-const validateUploadedFile = ( text: string, file: File ) => {  
-  
-  // We check the file size:
-  if ( text.length > maxFileSize ) throw new Error( "File's too large." )
-  else console.log( `The file size is ${text.length}. It's OK.` );
-  
-  // We check the file extension:
-  const extension = file.name.split('.')[1];
-  if ( extension !== 'txt' ) throw new Error( "Wrong extension." )
-  else console.log( `The file extension is ${extension}. It's OK.` );
+const displayUploadError = ( message: string ) => {
+  if ( errorMessageBox !== null ) {
+    errorMessageBox.innerHTML = message;
+  } else return;
+}
 
-  // We check if the text has any matches:
-  // console.log(text);
+const clearUploadError = () => {
+  if ( errorMessageBox !== null ) {
+    errorMessageBox.innerHTML = ``;
+  } else return;
+}
+
+const checkFileSize = ( file: File ) => {
+  const message = "File's too large.";
+  
+  if ( file.size > maxFileSize ) {
+    displayUploadError( message );
+    throw new Error( message );
+  }
+  else console.log( `The file size is ${file.size}b. OK.` );
+};
+
+const checkFileExtension = ( file: File ) => {
+  const extension = file.name.split('.')[1];
+  const message = "Wrong extension.";
+
+  if ( extension !== 'txt' ) {
+    displayUploadError( message );
+    throw new Error( message );
+  }
+  else console.log( `The file extension is ${extension}. OK.` );
+}
+
+const checkMatches = ( text: string ) => {
+  const errorMessage = "No matching names and results found.";
   const matches = getNamesAndResults( text );
-  if ( matches.length > 0) console.log( `Found ${matches.length} matches. It's OK.` )
-  else throw new Error( "No matches found." ); 
+
+  if ( matches.length <= 0) {
+    displayUploadError( errorMessage );
+    throw new Error( errorMessage );
+  } else {
+    clearUploadError();
+    console.log( `Found ${matches.length} matches. OK.` );
+  }
 
   return matches;
 }
 
-export const processUpload = async (event: Event ) => {
+const validateUploadedFile = ( text: string, file: File ) => {  
+  
+  // This is only basic validation.
+  // More thorough checks are performed in calculateResults module.
+  checkFileSize( file );
+  checkFileExtension( file );
+  const matches = checkMatches( text );
+
+  return matches;
+}
+
+export const processUpload = async (event: HTMLInputEvent ) => {
   console.log('passed to processUpload', event.target?.files );
-  const file = event.target?.files[0];
+  const files: any = event.target?.files;
+  let file: File;
+  
+  if ( files[0] ) { 
+    file = files[0]
+    const result = getFileFromInput( file );
+    const namesAndResults = validateUploadedFile( await result, file);
 
-  const result = getFileFromInput( file );
-  const namesAndResults = validateUploadedFile( await result, file);
-  // console.log( 'names results', namesAndResults );
-
-  return namesAndResults;
+    return namesAndResults;
+  } else return [];
 }
