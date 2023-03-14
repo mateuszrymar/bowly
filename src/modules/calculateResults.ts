@@ -80,7 +80,20 @@ export const isAnyFrameOverPointLimit = ( frames :number[][] ) => {
 };
 
 export const isAnyFrameTooLong = ( frames :number[][] ) => {
-  
+  let isTooLong = false;
+  const framesToCheck = cloneDeep( frames );
+
+  for (let i = 0; i < framesToCheck.length; i++) {
+    const frame = framesToCheck[i];
+
+    if ( i < 9) {
+      if (frame.length > 2) isTooLong = true;
+    } else {
+      if (frame.length > 3) isTooLong = true;
+    }
+  }
+
+  return isTooLong;
 }
 
 export const validateFrames = ( frames :number[][] ) => {
@@ -89,6 +102,7 @@ export const validateFrames = ( frames :number[][] ) => {
 
   if ( isAnyFrameFilled( framesToCheck ) === false ) return false
   if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
+  if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
   // Now check if there wasn't too many entries
   else return true;
 };
