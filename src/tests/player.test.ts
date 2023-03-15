@@ -35,29 +35,51 @@ const validInput_161 = {name: 'Oscar Martinez', rolls: [9, 1, 6, 3, 5, 5, 10, 8,
 const validInput_300 = {name: 'Stanley Hudson', rolls: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]};
 const validInput_110 = {name: 'Jim Halpert', rolls: [10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]};
 
-describe('#Player', () => {
+describe('#Player', () => {  
+
   // Invalid games
-  // it('returns result of type null, given an incorrect input', () => {
-  //   expect(new Player( invalidInputTooLong ).result).toStrictEqual( null );
-  // });
+  it('returns result of type null, given an incorrect input', () => {
+    expect(new Player( invalidTooLong ).result).toStrictEqual( null );
+  });
+  it('returns result of type null, given an incorrect input', () => {
+    expect(new Player( invalidNegative ).result).toStrictEqual( null );
+  });
+  it('returns result of type null, given an incorrect input', () => {
+    expect(new Player( invalidTooHigh ).result).toStrictEqual( null );
+  });
+  it('returns result of type null, given an incorrect input', () => {
+    expect(new Player( invalidSumAboveTen ).result).toStrictEqual( null );
+  });
+  it('returns result of type null, given an incorrect input', () => {
+    expect(new Player( invalidType_1 ).result).toStrictEqual( null );
+  });
+  it('returns result of type null, given an incorrect input', () => {
+    expect(new Player( invalidType_2 ).result).toStrictEqual( null );
+  });
 
 
   // Valid unfinished games
-  // it('returns result of type number, given a correct input', () => {
-  //   expect(new Player( validInput_30 ).result).toBeTypeOf( 'number' );
-  // });
-  // it('returns 0, given an early quit', () => {
-  //   expect(new Player( validQuit_0 ).result).toStrictEqual( 0 );
-  // });
-  // it('returns 1, given an early quit', () => {
-  //   expect(new Player( validQuit_1 ).result).toStrictEqual( 1 );
-  // });
-  // it('returns correct value, given an early quit', () => {
-  //   expect(new Player( validQuit_28 ).result).toStrictEqual( 28 );
-  // });
-  // it('returns correct value, given an early quit', () => {
-  //   expect(new Player( validQuit_90 ).result).toStrictEqual( 90 );
-  // });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_0 ).result).toStrictEqual( 0 );
+  });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_00 ).result).toStrictEqual( 0 );
+  });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_1 ).result).toStrictEqual( 1 );
+  });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_8 ).result).toStrictEqual( 8 );
+  });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_28 ).result).toStrictEqual( 28 );
+  });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_90 ).result).toStrictEqual( 90 );
+  });
+  it('returns correct value, given an early quit', () => {
+    expect(new Player( validQuit_109 ).result).toStrictEqual( 109 );
+  });
   
   // Valid finished games
   it('returns correct value, given a valid input', () => {
