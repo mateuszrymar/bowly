@@ -1,8 +1,5 @@
 import './index.css';
 import './results';
-import './testfiles/Ten-pin-results-example.txt'
-// import '../results.html'
-
 
 import { cloneDeep } from 'lodash-es';
 import { processUpload } from './modules/fileUpload';
