@@ -3,7 +3,7 @@ import { isAnyRollOutOfRange } from "../modules/calculateResults";
 
 const correctInput_118 = [[1, 9], [1, 9], [1, 9], [1, 9], [1, 9], [1, 9], [1, 9], [1, 9], [1, 9], [1, 9, 9]];
 export const wrongInputOverTen = [[7, 3], [9, 1], [10, 10], [8, 2], [7, 3], [5, 5], [6, 3], [10], [11]]; // Expected: Error due 11 in last frame
-export const wrongInputNegative = [[-7, 3], [9, 1], [10, 10], [8, 2], [7, 3], [5, 5], [6, 3], [10], [10], [7, 2, 0]]; // Expected: Error due to negative value in the first frame
+export const wrongInputNegative = [[7, -3], [9, 1], [10, 10], [8, 2], [7, 3], [5, 5], [6, 3], [10], [10], [7, 2]]; // Expected: Error due to negative value in the first frame
 
 describe('#isAnyRollOutOfRange', () => {
   it('returns false given a valid array', () => {

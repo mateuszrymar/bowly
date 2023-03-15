@@ -123,6 +123,8 @@ export const isAnyRollOutOfRange = ( frames :number[][] ) => {
   const rollsToCheck = cloneDeep( frames ).flat();
   
   rollsToCheck.forEach( roll => {
+    console.log(roll);
+    
     if ((roll < 0) || (roll > 10)) {
       isOutOfRange = true;      
     }
@@ -249,6 +251,7 @@ export class Player {
 
     // First, we divide rolls into frames:
     const playerFrames = divideIntoFrames( playerRolls );
+    
 
     // Then we validate and process frames:
     const areFramesValid = validateFrames( playerFrames );

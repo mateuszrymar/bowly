@@ -26,17 +26,23 @@ const getFileFromInput = (file: File): Promise<any> => {
 }
 
 const getNamesAndResults = ( text: string ) => {
-  const textCopy = `${text}`;  
-  const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| ]+)/gm);
+  const textCopy = `${text}`;
+  const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| |-]+)/gm);
   const matchArray = [...textCopy.matchAll(regEx)];
   const allPlayerRolls: PlayerRolls[] = [];
 
   matchArray.forEach(element => {
     allPlayerRolls.push({ 
       name: element[1], 
-      rolls: element[2].replace(/\s+/g, '').split(',').map(numAsString => Number(numAsString))
+      rolls: element[2]
+        .replace(/\s+/g, '')
+        .split(',')
+        .map(numAsString => Number(numAsString))
     });
   });
+
+  console.log(matchArray);
+  
   
   return allPlayerRolls;
 };
@@ -108,7 +114,9 @@ export const processUpload = async (event: HTMLInputEvent ) => {
   if ( files[0] ) { 
     file = files[0]
     const result = getFileFromInput( file );
+    console.log(result);    
     const namesAndResults = validateUploadedFile( await result, file);
+    console.log(namesAndResults);    
 
     return namesAndResults;
   } else return [];

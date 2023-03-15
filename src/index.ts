@@ -52,7 +52,6 @@ const addUploadListener = () => {
 })();
 
 const saveToSessionStorage = ( data: PlayerInt[] ) => {
-  console.log( 'ready for saving: ', data );
   const dataCopy = deepClone( data );
   const json = JSON.stringify( dataCopy );
 
@@ -66,7 +65,7 @@ const redirectToResultsPage = () => {
 
 const processPlayerEntries = ( text: PlayerRolls[] ) => {
   // console.log('We caught it in index.html: ', text );
-  const playerEntries: PlayerRolls[] = cloneDeep(text);
+  const playerEntries: PlayerRolls[] = cloneDeep(text);  
   
   // @TODO Here we'll process text entries into frames
   const playerResults = getAllPlayerResults( playerEntries );
@@ -76,5 +75,5 @@ const processPlayerEntries = ( text: PlayerRolls[] ) => {
   saveToSessionStorage( playerResults );
 
   // now we can switch to results.html
-  redirectToResultsPage();  
+  redirectToResultsPage();
 }
