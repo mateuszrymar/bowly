@@ -35,12 +35,13 @@ const uploadInput: HTMLInputElement | null = document.querySelector('.upload-pag
 
 const addUploadListener = () => {  
   uploadButton?.addEventListener('click', (event) => {
-    uploadInput?.click();
     event.preventDefault();
+    uploadInput?.click();
   })
-
+  
   // @TODO This type check on the event is tricky:
   uploadInput?.addEventListener('change', async ( event: any ) => {
+    event.preventDefault();
     const uploadedText = processUpload( event );
     processPlayerEntries( await uploadedText );
   })
@@ -73,7 +74,7 @@ const processPlayerEntries = ( text: PlayerRolls[] ) => {
 
   // now we can save player results to sessionstorage
   saveToSessionStorage( playerResults );
-
+  
   // now we can switch to results.html
-  redirectToResultsPage();
+  if ( playerResults.length !== 0 ) redirectToResultsPage();  
 }

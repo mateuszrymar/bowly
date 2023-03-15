@@ -27,6 +27,8 @@ module.exports = {
       green_400: 'rgba(164, 222, 41, 1)',
       green_500: 'rgba(142, 198, 24, 1)',
       green_600: 'rgba(130, 184, 15, 1)',
+      red_600: 'rgba(212, 89, 81, 1)',
+
 
       primary: 'rgba(28, 125, 243, 1)',
       cta: 'linear-gradient(135deg, #1C7DF3 0%, #1ABCFA 100%)',

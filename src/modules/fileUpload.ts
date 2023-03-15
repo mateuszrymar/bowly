@@ -27,7 +27,7 @@ const getFileFromInput = (file: File): Promise<any> => {
 
 const getNamesAndResults = ( text: string ) => {
   const textCopy = `${text}`;
-  const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| |-]+)/gm);
+  const regEx = RegExp(/(?<name>^[^,|\n]+)\n(?<results>[\d|,| |-]+$)/gm);
   const matchArray = [...textCopy.matchAll(regEx)];
   const allPlayerRolls: PlayerRolls[] = [];
 

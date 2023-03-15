@@ -1,5 +1,3 @@
-import { cloneDeep } from 'lodash-es';
-
 import { displayResults } from './modules/displayResults';
 
 
