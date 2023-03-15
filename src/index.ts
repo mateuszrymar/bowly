@@ -6,28 +6,7 @@ import { processUpload } from './modules/fileUpload';
 import { getAllPlayerResults } from './modules/calculateResults';
 import { deepClone } from '@vitest/utils';
 
-
-
-interface PlayerRolls {
-  name: string;
-  rolls: number[];
-};
-
-interface FrameInt {
-  frameId: number;
-  rolls: number[];
-  isStrike: boolean;
-  isSpare: boolean;
-  pointResult: number;
-}
-
-interface PlayerInt {
-  name: string;
-  result: number | null;
-  frames: FrameInt[];
-}
-
-
+import { PlayerInt, PlayerRollsInt, FrameInt } from './modules/interface';
 
 // DOM Elements:
 const uploadButton = document.querySelector('.upload-page__button');
@@ -64,17 +43,16 @@ const redirectToResultsPage = () => {
   window.location.replace(newLocation);
 }
 
-const processPlayerEntries = ( text: PlayerRolls[] ) => {
-  // console.log('We caught it in index.html: ', text );
-  const playerEntries: PlayerRolls[] = cloneDeep(text);  
+// Here we dispatch data to appropriate modules and functions:
+const processPlayerEntries = ( text: PlayerRollsInt[] ) => {
+  const playerEntries: PlayerRollsInt[] = cloneDeep(text);
   
-  // @TODO Here we'll process text entries into frames
+  // Here we'll process text entries into frames
   const playerResults = getAllPlayerResults( playerEntries );
-  console.log('Results to be saved: ', playerResults);
 
-  // now we can save player results to sessionstorage
+  // Now we can save player results to sessionstorage
   saveToSessionStorage( playerResults );
   
-  // now we can switch to results.html
+  // Now we can switch to results.html
   if ( playerResults.length !== 0 ) redirectToResultsPage();  
 }

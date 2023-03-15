@@ -97,7 +97,7 @@ a {
 
 /* Both Pages */
 .page {
-  min-height: calc(100vh - var(--navbar-height));
+  min-height: 100vh;
 }
 .container {
   padding: 0 1rem;
