@@ -4,30 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./src/index.css" rel="stylesheet">
-    <link href="dist/assets/cloneDeep-cb3159cd.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
-    <title>bowly</title>
+    <link href="src/index.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    </style>
+    <title>Bowly</title>
   </head>
   <body>
+
     <nav class="navbar">
-      <div class="container mx-auto">
-        <h1 class="navbar__header">
+      <div class="container">
+        <h1 class="navbar__heading">
           <a href="index.html">Bowly.</a>
         </h1>
       </div>
     </nav>
 
     <main 
-      class="table-page page container mx-auto flex flex-col items-center"
-      style="display: flex;"
+      class="table-page page container"
     >
 
-      <section class="mt-[80px] w-full relative w-full overflow-x-scroll">        
-        <table class="table w-full overflow-x-scroll">
-          <thead class="table__head bg-white_150 font-light text-[28px] text-center">
+      <section class="table-wrapper">
+        <table class="table">
+          <thead class="table__head text-[28px] text-center">
             <tr>
               <td>
                 <span class="head__label">Player</span>
@@ -45,7 +44,7 @@
           </tbody>
         </table>
       </section>
-      <footer class="w-full h-[85px] bg-white_150 flex justify-center items-center">
+      <footer class="results__footer">
         <p>
           <a href="../../index.html">Load another file</a>
         </p>
