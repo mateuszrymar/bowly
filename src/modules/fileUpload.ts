@@ -10,7 +10,7 @@ interface HTMLInputEvent extends Event {
 
 // Variables
 const maxFileSize: number = 1e6; // in bytes.
-const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload-page__file-error-msg')
+const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload__file-error-msg')
 
 // Functions
 const getFileFromInput = (file: File): Promise<any> => {

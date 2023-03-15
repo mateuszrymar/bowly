@@ -1,14 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 * {
   /* For debugging only */
   /* outline: 1px solid red; */
 }
 
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  --document-font: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--document-font);
 
   --white-000: rgba(255, 255, 255, 1);
   --white-050: rgba(251, 251, 253, 1);
@@ -51,11 +48,17 @@
   /* Size Variables */
   --navbar-height: 80px;
   --table-row-height: 85px;
+
+}
+
+body{
+  margin: 0;
 }
 
 /* Headers */
 h1, h2, h3, h4 {
   font-weight: 600;
+  margin: 0;
 }
 h1 {
   font-size: var(--header-2);
@@ -73,6 +76,10 @@ h3 {
 h4 {
   font-size: var(--header-6);
 }
+p {
+  margin: 0;
+}
+
 
 /* Navbar */
 .navbar {
@@ -86,18 +93,30 @@ h4 {
   z-index: 10;
   background-color: var(--background);
 }
+.navbar__header {
+  margin: 0;
+  transform: translateY(1.21rem);
+}
 .navbar__header>a {
   color: var(--grey-700) !important;
 }
 
 /* Links */
 a {
+  text-decoration: none;
   color: var(--blue-700);
+}
+button {
+  border: 0;
+  font-family: var(--document-font);
 }
 
 /* Both Pages */
 .page {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .container {
   padding: 0 1rem;
@@ -107,10 +126,61 @@ a {
 }
 
 /* Upload Page */
-.upload-page__button {
+.upload__hero {
+  display: flex;
+  flex-grow: 2;
+  align-items: center;
+  padding-top: 4.21rem;
+}
+.upload__button {
   background: var(--blue-gradient);
   color: var(--background);
 }
+.upload__group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+}
+.upload__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.16rem;
+  width: 16.84rem;
+  padding: 0 0.74rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-radius: 1.58rem;
+}
+.upload__button:hover {
+  cursor: pointer;
+  outline: 1px solid var(--blue-500);
+}
+.upload__button-plus {
+  font-size: 2.63rem;
+  font-weight: 200;
+  flex-grow: 0;
+  transform: translateY(-0.21rem);
+}
+.upload__button-text-wrapper {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  transform: translateY(0rem);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.upload__file-error-msg {
+  text-align: center;
+  min-height: 2rem;
+}
+.upload__file-description {
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 
 /* Results Page */
 /* Table Head */
@@ -218,4 +288,30 @@ table {
   border-top: 16px solid transparent;  
   border-bottom: 16px solid var(--grey-300-transparent);
   mix-blend-mode: multiply;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+/* Media queries */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
 }

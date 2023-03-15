@@ -1,16 +1,18 @@
 import './index.css';
-// import './results';
-import { cloneDeep } from 'lodash-es';
+import './results';
+import './testfiles/Ten-pin-results-example.txt'
+// import '../results.html'
 
+
+import { cloneDeep } from 'lodash-es';
 import { processUpload } from './modules/fileUpload';
 import { getAllPlayerResults } from './modules/calculateResults';
 import { deepClone } from '@vitest/utils';
-
-import { PlayerInt, PlayerRollsInt, FrameInt } from './modules/interface';
+import { PlayerInt, PlayerRollsInt } from './modules/interface';
 
 // DOM Elements:
-const uploadButton = document.querySelector('.upload-page__button');
-const uploadInput: HTMLInputElement | null = document.querySelector('.upload-page__input');
+const uploadButton = document.querySelector('.upload__button');
+const uploadInput: HTMLInputElement | null = document.querySelector('.upload__input');
 
 const addUploadListener = () => {  
   uploadButton?.addEventListener('click', (event) => {
