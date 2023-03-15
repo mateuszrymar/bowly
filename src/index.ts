@@ -70,7 +70,7 @@ const processPlayerEntries = ( text: PlayerRolls[] ) => {
   
   // @TODO Here we'll process text entries into frames
   const playerResults = getAllPlayerResults( playerEntries );
-  console.log(playerResults);
+  console.log('Results to be saved: ', playerResults);
 
   // now we can save player results to sessionstorage
   saveToSessionStorage( playerResults );

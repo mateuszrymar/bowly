@@ -80,7 +80,7 @@ const createFrameList = ( playerFrames: FrameInt[] ) => {
   const playerFramesCopy = cloneDeep( playerFrames );
   let allPlayerFrames = ``;
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < playerFramesCopy.length; i++) {
     const currentFrame = playerFramesCopy[i];
 
     if ( i < 9 ) {

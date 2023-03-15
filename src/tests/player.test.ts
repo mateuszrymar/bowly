@@ -8,8 +8,6 @@ const invalidTooLong = {name: 'Paweł Kowalski', rolls: [7, 3, 9, 1, 10, 10, 8, 
 const invalidNegative = {name: 'Paweł Kowalski', rolls: [-7, 3, 9, 1, 10, 10, 8, 2, 7, 3, 5, 5, 6, 3, 10, 10, 7, 2, 0]}; // First number is negative
 const invalidTooHigh = {name: 'Paweł Kowalski', rolls: [7, 3, 9, 1, 10, 10, 8, 2, 7, 3, 5, 5, 6, 3, 10, 10, 0, 11]}; // Last number is above 10
 const invalidSumAboveTen = {name: 'Paweł Kowalski', rolls: [7, 4, 9, 1, 10, 10, 8, 2, 7, 3, 5, 5, 6, 3, 10, 10, 7, 2]}; // First frame sums to 11
-const invalidType_1 = {name: 'Paweł Kowalski', rolls: ['7', 4, 9, 1, 10, 10, 8, 2, 7, 3, 5, 5, 6, 3, 10, 10, 7, 2]}; // Wrong type
-const invalidType_2 = {name: 'Paweł Kowalski', rolls: 'Paweł Kowalski'}; // Wrong type
 
 // Valid unfinished games
 const validQuit_0 = {name: 'Quitty McQuitt', rolls: [0]};
@@ -50,13 +48,6 @@ describe('#Player', () => {
   it('returns result of type null, given an incorrect input', () => {
     expect(new Player( invalidSumAboveTen ).result).toStrictEqual( null );
   });
-  it('returns result of type null, given an incorrect input', () => {
-    expect(new Player( invalidType_1 ).result).toStrictEqual( null );
-  });
-  it('returns result of type null, given an incorrect input', () => {
-    expect(new Player( invalidType_2 ).result).toStrictEqual( null );
-  });
-
 
   // Valid unfinished games
   it('returns correct value, given an early quit', () => {

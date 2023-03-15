@@ -59,6 +59,7 @@ export const isAnyFrameFilled = ( frames :number[][] ) => {
 const isLastFrameOverLimit = ( lastFrame: number[] ) => {
   const frameToCheck = cloneDeep( lastFrame );
   let isOverLimit = false;
+  console.log( lastFrame );
 
   if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
     console.log( 'Wrong input: Frame #10 is over 30 points.');
@@ -91,6 +92,7 @@ export const isAnyFrameOverPointLimit = ( frames :number[][] ) => {
 
   const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
   const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
+
   const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
 
   return isOverLimit;
@@ -116,10 +118,24 @@ export const isAnyFrameTooLong = ( frames :number[][] ) => {
   return isTooLong;
 }
 
+export const isAnyRollOutOfRange = ( frames :number[][] ) => {
+  let isOutOfRange = false;
+  const rollsToCheck = cloneDeep( frames ).flat();
+  
+  rollsToCheck.forEach( roll => {
+    if ((roll < 0) || (roll > 10)) {
+      isOutOfRange = true;      
+    }
+  });
+
+  return isOutOfRange;
+};
+
 export const validateFrames = ( frames :number[][] ) => {
   const framesToCheck = cloneDeep( frames );
 
   if ( isAnyFrameFilled( framesToCheck ) === false ) return false
+  if ( isAnyRollOutOfRange( framesToCheck ) === true ) return false
   if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
   if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
   else return true;
