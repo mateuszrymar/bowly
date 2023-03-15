@@ -35,12 +35,13 @@ const uploadInput: HTMLInputElement | null = document.querySelector('.upload-pag
 
 const addUploadListener = () => {  
   uploadButton?.addEventListener('click', (event) => {
-    uploadInput?.click();
     event.preventDefault();
+    uploadInput?.click();
   })
-
+  
   // @TODO This type check on the event is tricky:
   uploadInput?.addEventListener('change', async ( event: any ) => {
+    event.preventDefault();
     const uploadedText = processUpload( event );
     processPlayerEntries( await uploadedText );
   })
@@ -52,7 +53,6 @@ const addUploadListener = () => {
 })();
 
 const saveToSessionStorage = ( data: PlayerInt[] ) => {
-  console.log( 'ready for saving: ', data );
   const dataCopy = deepClone( data );
   const json = JSON.stringify( dataCopy );
 
@@ -66,15 +66,15 @@ const redirectToResultsPage = () => {
 
 const processPlayerEntries = ( text: PlayerRolls[] ) => {
   // console.log('We caught it in index.html: ', text );
-  const playerEntries: PlayerRolls[] = cloneDeep(text);
+  const playerEntries: PlayerRolls[] = cloneDeep(text);  
   
   // @TODO Here we'll process text entries into frames
   const playerResults = getAllPlayerResults( playerEntries );
-  console.log(playerResults);
+  console.log('Results to be saved: ', playerResults);
 
   // now we can save player results to sessionstorage
   saveToSessionStorage( playerResults );
-
+  
   // now we can switch to results.html
-  redirectToResultsPage();  
+  if ( playerResults.length !== 0 ) redirectToResultsPage();  
 }
