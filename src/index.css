@@ -79,6 +79,15 @@ h4 {
   border: 1px solid var(--grey-300);
   border-width: 0 0 1px 0;
   height: var(--navbar-height);
+  position: fixed;
+  left:0;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  background-color: var(--background);
+}
+.navbar__header>a {
+  color: var(--grey-700) !important;
 }
 
 /* Links */
@@ -88,7 +97,7 @@ a {
 
 /* Both Pages */
 .page {
-  min-height: calc(100vh - var(--navbar-height));
+  min-height: 100vh;
 }
 .container {
   padding: 0 1rem;

@@ -20,12 +20,12 @@ import { cloneDeep, isEmpty, sum } from 'lodash-es';
     - calculatePoints()
   DONE 6. Now we have an array of objects.
   DONE 7. To get the point total, we map through frame points.
-  8. We bundle all data together into an object that contains:
+  DONE 8. We bundle all data together into an object that contains:
     - Player name
     - Player result
     - Frames with individual frame results.
-    - Are results valid?
-  9. We return data from previous step.
+    - Are results valid? - this info can be passed as a null result, doesn't require a separate field.
+  DONE 9. We return data from previous step.
 */
 
 interface PlayerRollsInt {
@@ -59,6 +59,7 @@ export const isAnyFrameFilled = ( frames :number[][] ) => {
 const isLastFrameOverLimit = ( lastFrame: number[] ) => {
   const frameToCheck = cloneDeep( lastFrame );
   let isOverLimit = false;
+  console.log( lastFrame );
 
   if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
     console.log( 'Wrong input: Frame #10 is over 30 points.');
@@ -91,6 +92,7 @@ export const isAnyFrameOverPointLimit = ( frames :number[][] ) => {
 
   const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
   const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
+
   const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
 
   return isOverLimit;
@@ -116,10 +118,26 @@ export const isAnyFrameTooLong = ( frames :number[][] ) => {
   return isTooLong;
 }
 
+export const isAnyRollOutOfRange = ( frames :number[][] ) => {
+  let isOutOfRange = false;
+  const rollsToCheck = cloneDeep( frames ).flat();
+  
+  rollsToCheck.forEach( roll => {
+    console.log(roll);
+    
+    if ((roll < 0) || (roll > 10)) {
+      isOutOfRange = true;      
+    }
+  });
+
+  return isOutOfRange;
+};
+
 export const validateFrames = ( frames :number[][] ) => {
   const framesToCheck = cloneDeep( frames );
 
   if ( isAnyFrameFilled( framesToCheck ) === false ) return false
+  if ( isAnyRollOutOfRange( framesToCheck ) === true ) return false
   if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
   if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
   else return true;
@@ -180,27 +198,19 @@ class Frame {
       if ( frameId>=9 ) {
         return directFramePoints;
       } else {
-        let nextResult: number = 0; 
-        let afterNextResult: number = 0;
+        // We need to slice the original array after the current frame.        
+        // Then, we can flatten that array and take 1 or 2 numbers depending on:
+        // - if it's a strike - 2 numbers (if existing),
+        // - if it's a spare - 1 number (if existing).
+        const nextNumbers = allFramesCopy.slice( frameId+1 ).flat(); // Since slice is a non-mutating method, we don't need to copy the array.
 
-        // @TODO Check if you can solve it in a cleaner manner.
-        // We need this check to process early quit games correctly:
-        if ( allFramesCopy[ frameId+1 ] !== undefined) {
-          nextResult = allFramesCopy[ frameId+1 ][0];
-          if ( [ frameId+1 ][1] !== undefined ) {
-            afterNextResult = allFramesCopy[ frameId+1 ][1]
-          } else {
-            if ( allFramesCopy[ frameId+2 ] !== undefined ) {
-              afterNextResult = allFramesCopy[ frameId+2 ][0];
-            } else if( allFramesCopy[ frameId+1 ][2] !== undefined ) {
-              afterNextResult = allFramesCopy[ frameId+1 ][2];
-            } else {
-              afterNextResult = 0;
-            }
-          }
-        } 
+        const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
+        const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
 
-        if ( isStrike ) return directFramePoints + nextResult + afterNextResult;
+        const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
+        const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
+
+        if ( isStrike ) return directFramePoints + nextResult + secondNextResult;
         else if ( isSpare ) return directFramePoints + nextResult;
         else return directFramePoints;
       };
@@ -241,6 +251,7 @@ export class Player {
 
     // First, we divide rolls into frames:
     const playerFrames = divideIntoFrames( playerRolls );
+    
 
     // Then we validate and process frames:
     const areFramesValid = validateFrames( playerFrames );

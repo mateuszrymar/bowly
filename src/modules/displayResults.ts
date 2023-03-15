@@ -80,7 +80,7 @@ const createFrameList = ( playerFrames: FrameInt[] ) => {
   const playerFramesCopy = cloneDeep( playerFrames );
   let allPlayerFrames = ``;
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < playerFramesCopy.length; i++) {
     const currentFrame = playerFramesCopy[i];
 
     if ( i < 9 ) {
@@ -101,7 +101,8 @@ const createFrameList = ( playerFrames: FrameInt[] ) => {
 const createTableRow = ( playerData: PlayerInt ) => {
   const playerDataCopy = cloneDeep( playerData );
   const playerName = playerDataCopy.name;
-  const playerScore = playerDataCopy.result;
+  const incorrectMessage = `<div class="error">Incorrect data.</div>`;
+  const playerScore = (playerDataCopy.result === null) ? incorrectMessage : playerDataCopy.result;
   const playerFrames = playerDataCopy.frames;
 
   const frameList = createFrameList( playerFrames );
