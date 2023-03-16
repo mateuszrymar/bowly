@@ -77,8 +77,8 @@ const createTypicalFrame = ( playerFrames: FrameInt ) => {
 
   const rolls = playerFramesCopy.rolls;
   const pointResult = playerFramesCopy.pointResult;
-  const isStrike = playerFramesCopy.isStrike;
-  const isSpare = playerFramesCopy.isSpare;
+  const isStrike = playerFramesCopy.isStrike[0];
+  const isSpare = playerFramesCopy.isSpare[0];
 
   const roll_1 = rolls[0];
   const roll_2 = (rolls[1] !== undefined) ? rolls[1] : ``;
@@ -110,18 +110,22 @@ const createLastFrame = ( playerFrames: FrameInt ) => {
   const roll_1 = rolls[0];
   const roll_2 = (rolls[1] !== undefined) ? rolls[1] : ``;
   const roll_3 = (rolls[2] !== undefined) ? rolls[2] : ``;
-  let strikeDiv: string;
-  let spareDiv: string;
+  let strikeDiv: string[] = [];
+  let spareDiv: string[] = [];
 
-  isStrike ? strikeDiv = `<div class="strike"></div>` : strikeDiv = ``;
-  isSpare ? spareDiv = `<div class="spare"></div>` : spareDiv = ``;
+  isStrike.forEach(roll => {
+    (roll === true) ? strikeDiv.push(`<div class="strike"></div>`) : strikeDiv.push(``);
+  });
+  isSpare.forEach(roll => {
+    (roll === true) ? spareDiv.push(`<div class="spare"></div>`) : spareDiv.push(``);
+  });
 
   return `
     <li class="table-row__frame--last table-row__frame">
       <div>
-        <span class="roll">${roll_1}${strikeDiv}</span>
-        <span class="roll">${roll_2}${strikeDiv}${spareDiv}</span>
-        <span class="roll">${roll_3}${strikeDiv}</span>
+        <span class="roll">${roll_1}${strikeDiv[0]}</span>
+        <span class="roll">${roll_2}${strikeDiv[1]}${spareDiv[0]}</span>
+        <span class="roll">${roll_3}${strikeDiv[2]}${spareDiv[1]}</span>
       </div>
       <p class="frame__result">${pointResult}</p>
     </li>

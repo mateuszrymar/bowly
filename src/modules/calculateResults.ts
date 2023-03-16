@@ -209,14 +209,43 @@ const processFrames = ( partitionedArray: number[][] ) => {
 class Frame {
   frameId: number;
   rolls: number[];
-  isStrike: boolean;
-  isSpare: boolean;
+  isStrike: boolean[];
+  isSpare: boolean[];
   pointResult: number;
 
   constructor( frameArray: number[][], frameIndex: number ) {
     const frameArrayCopy = cloneDeep( frameArray );
 
-    const calculateResult = ( allFrames: number[][], frameId: number, isStrike: boolean, isSpare: boolean ) => {
+    const checkIfStrike = ( allFrames: number[][], frameId: number ): boolean[] => {
+      const allFramesCopy = cloneDeep( allFrames );
+
+      if ( frameId>=9 ) {
+        let lastFrameStrikes: boolean[] = [];
+        ( allFramesCopy[ frameId ][0] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+        (( allFramesCopy[ frameId ][1] === 10 ) && ( allFramesCopy[ frameId ][0] !== 0 )) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+        ( allFramesCopy[ frameId ][2] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+        
+        return lastFrameStrikes;
+      } else {
+        return [(( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ))];
+      };          
+    }
+
+    const checkifSpare = ( allFrames: number[][], frameId: number ): boolean[] => {
+      const allFramesCopy = cloneDeep( allFrames );
+
+      if ( frameId>=9 ) {
+        let lastFrameSpares: boolean[] = [];
+        (( this.rolls[0] !== 10 ) && (( this.rolls[0] + this.rolls[1] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
+        (( this.rolls[1] !== 10 ) && (( this.rolls[1] + this.rolls[2] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
+        
+        return lastFrameSpares;
+      } else {
+        return [(( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ))];
+      };          
+    }
+
+    const calculateResult = ( allFrames: number[][], frameId: number, isStrike: boolean[], isSpare: boolean[] ) => {
       const allFramesCopy = cloneDeep( allFrames );
       const directFramePoints = allFramesCopy[ frameId ].reduce((acc, val) => acc + val, 0 );
       // let pointResult = 0;
@@ -237,16 +266,18 @@ class Frame {
         const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
         const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
 
-        if ( isStrike ) return directFramePoints + nextResult + secondNextResult;
-        else if ( isSpare ) return directFramePoints + nextResult;
+        if ( isStrike[0] === true ) return directFramePoints + nextResult + secondNextResult;
+        else if ( isSpare[0] === true ) return directFramePoints + nextResult;
         else return directFramePoints;
       };
     };
 
     this.frameId = frameIndex;
     this.rolls = frameArray[ frameIndex ];
-    this.isStrike = (( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ));
-    this.isSpare = (( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ));
+    this.isStrike = checkIfStrike( frameArrayCopy, frameIndex);
+    // this.isStrike = [(( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ))];
+    this.isSpare = checkifSpare( frameArrayCopy, frameIndex);
+    // this.isSpare = [(( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ))];
     this.pointResult = calculateResult( frameArrayCopy, frameIndex, this.isStrike, this.isSpare );
   };
 };
