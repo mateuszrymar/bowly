@@ -14,8 +14,7 @@ import { PlayerInt, FrameInt } from "../types/types";
 
 export const prepareDisplay = ( playerData: PlayerInt[] ) => {
   const playerDataCopy = cloneDeep( playerData );
-  const tableRows = createTableRows ( playerDataCopy );
-  
+  const tableRows = createTableRows ( playerDataCopy );  
   return tableRows;
 };
 
@@ -57,9 +56,7 @@ const createFrameList = ( playerFrames: FrameInt[] ) => {
   const playerFramesCopy = cloneDeep( playerFrames );
   let allPlayerFrames = ``;
 
-  for (let i = 0; i < playerFramesCopy.length; i++) {
-    const currentFrame = playerFramesCopy[i];
-
+  playerFramesCopy.forEach((currentFrame, i) => {
     if ( i < 9 ) {
       const frame = createTypicalFrame( currentFrame );
       allPlayerFrames += frame;
@@ -67,7 +64,7 @@ const createFrameList = ( playerFrames: FrameInt[] ) => {
       const frame = createLastFrame( currentFrame );
       allPlayerFrames += frame;
     };
-  };
+  });
 
   return`${allPlayerFrames}`;
 } ;

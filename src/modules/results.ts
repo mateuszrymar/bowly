@@ -5,7 +5,7 @@
 */
 
 // DOM Elements
-const tableBody = document.querySelector('.table__body');
+const tableBody = document.querySelector('.results-table__body');
 
 export const display = (() => {
   const tableRows = getDataFromSessionStorage();

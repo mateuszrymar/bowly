@@ -176,10 +176,8 @@ const isLastFrameOverLimit = ( lastFrame: number[] ) => {
 const isAnyFrameTooLong = ( frames :number[][] ) => {
   let isTooLong = false;
   const framesToCheck = cloneDeep( frames );
-
-  for (let i = 0; i < framesToCheck.length; i++) {
-    const frame = framesToCheck[i];
-
+  
+  framesToCheck.forEach((frame, i) => {
     if ( i < 9) {
       // Here we check frames 1-9:
       if (frame.length > 2) isTooLong = true;
@@ -188,7 +186,7 @@ const isAnyFrameTooLong = ( frames :number[][] ) => {
       if (frame.length > 3) isTooLong = true;
       if (((frame[0] + frame[1]) < 10) && (frame.length > 2)) isTooLong = true;
     };
-  };
+  });
 
   return isTooLong;
 };
@@ -211,74 +209,66 @@ class Frame {
   rolls: number[];
   isStrike: boolean[];
   isSpare: boolean[];
-  pointResult: number;
+  pointResult: number;  
 
   constructor( frameArray: number[][], frameIndex: number ) {
     const frameArrayCopy = cloneDeep( frameArray );
-
-    const checkIfStrike = ( allFrames: number[][], frameId: number ): boolean[] => {
-      const allFramesCopy = cloneDeep( allFrames );
-
-      if ( frameId>=9 ) {
-        let lastFrameStrikes: boolean[] = [];
-        ( allFramesCopy[ frameId ][0] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
-        (( allFramesCopy[ frameId ][1] === 10 ) && ( allFramesCopy[ frameId ][0] !== 0 )) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
-        ( allFramesCopy[ frameId ][2] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
-        
-        return lastFrameStrikes;
-      } else {
-        return [(( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ))];
-      };          
-    }
-
-    const checkifSpare = ( allFrames: number[][], frameId: number ): boolean[] => {
-      const allFramesCopy = cloneDeep( allFrames );
-
-      if ( frameId>=9 ) {
-        let lastFrameSpares: boolean[] = [];
-        (( this.rolls[0] !== 10 ) && (( this.rolls[0] + this.rolls[1] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
-        (( this.rolls[1] !== 10 ) && (( this.rolls[1] + this.rolls[2] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
-        
-        return lastFrameSpares;
-      } else {
-        return [(( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ))];
-      };          
-    }
-
-    const calculateResult = ( allFrames: number[][], frameId: number, isStrike: boolean[], isSpare: boolean[] ) => {
-      const allFramesCopy = cloneDeep( allFrames );
-      const directFramePoints = allFramesCopy[ frameId ].reduce((acc, val) => acc + val, 0 );
-      // let pointResult = 0;
-
-      // On frames 10, 11, 12 we don't count bonus points for strikes & spares:
-      if ( frameId>=9 ) {
-        return directFramePoints;
-      } else {
-        // We need to slice the original array after the current frame.        
-        // Then, we can flatten that array and take 1 or 2 numbers depending on:
-        // - if it's a strike - 2 numbers (if existing),
-        // - if it's a spare - 1 number (if existing).
-        const nextNumbers = allFramesCopy.slice( frameId+1 ).flat();
-
-        const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
-        const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
-
-        const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
-        const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
-
-        if ( isStrike[0] === true ) return directFramePoints + nextResult + secondNextResult;
-        else if ( isSpare[0] === true ) return directFramePoints + nextResult;
-        else return directFramePoints;
-      };
-    };
-
     this.frameId = frameIndex;
     this.rolls = frameArray[ frameIndex ];
-    this.isStrike = checkIfStrike( frameArrayCopy, frameIndex);
-    // this.isStrike = [(( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ))];
-    this.isSpare = checkifSpare( frameArrayCopy, frameIndex);
-    // this.isSpare = [(( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ))];
-    this.pointResult = calculateResult( frameArrayCopy, frameIndex, this.isStrike, this.isSpare );
+    this.isStrike = this.checkIfStrike( frameIndex );
+    this.isSpare = this.checkifSpare( frameIndex );
+    this.pointResult = this.calculateResult( frameArrayCopy, frameIndex, this.isStrike, this.isSpare );
+  };
+
+  checkIfStrike ( frameId: number ): boolean[] {
+    if ( frameId>=9 ) {
+      let lastFrameStrikes: boolean[] = [];
+      ( this.rolls[0] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+      (( this.rolls[1] === 10 ) && ( this.rolls[0] !== 0 )) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+      ( this.rolls[2] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+      
+      return lastFrameStrikes;
+    } else {
+      return [(( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ))];
+    };          
+  };
+
+  checkifSpare ( frameId: number ): boolean[] {
+    if ( frameId>=9 ) {
+      let lastFrameSpares: boolean[] = [];
+      (( this.rolls[0] !== 10 ) && (( this.rolls[0] + this.rolls[1] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
+      (( this.rolls[1] !== 10 ) && (( this.rolls[1] + this.rolls[2] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
+      
+      return lastFrameSpares;
+    } else {
+      return [(( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ))];
+    };          
+  };
+
+  calculateResult ( allFrames: number[][], frameId: number, isStrike: boolean[], isSpare: boolean[] ) {
+    const allFramesCopy = cloneDeep( allFrames );
+    const directFramePoints = allFramesCopy[ frameId ].reduce((acc, val) => acc + val, 0 );
+
+    // On frames 10 we don't count bonus points for strikes & spares:
+    if ( frameId>=9 ) {
+      return directFramePoints;
+    } else {
+      // We need to slice the original array after the current frame.        
+      // Then, we can flatten that array and take 1 or 2 numbers depending on:
+      // - if it's a strike - 2 numbers (if existing),
+      // - if it's a spare - 1 number (if existing).
+      const nextNumbers = allFramesCopy.slice( frameId+1 ).flat();
+
+      const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
+      const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
+
+      const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
+      const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
+
+      if ( isStrike[0] === true ) return directFramePoints + nextResult + secondNextResult;
+      else if ( isSpare[0] === true ) return directFramePoints + nextResult;
+      else return directFramePoints;
+    };
   };
 };
 
