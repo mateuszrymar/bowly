@@ -6,8 +6,8 @@ export interface PlayerRollsInt {
 export interface FrameInt {
   frameId: number;
   rolls: number[];
-  isStrike: boolean;
-  isSpare: boolean;
+  isStrike: boolean[];
+  isSpare: boolean[];
   pointResult: number;
 };
 

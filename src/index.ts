@@ -61,6 +61,8 @@ const processForDisplay = ( entries: PlayerRollsInt[] ) => {
   const detailedResults = calculateResults( playerEntries );
   const tableHtml = prepareDisplay( detailedResults );
   saveToSessionStorage( tableHtml );
+  console.log(detailedResults);
+  
   
   // Finally, we switch to results.html:
   if ( tableHtml !== "" ) redirectToResultsPage();
