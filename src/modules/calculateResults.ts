@@ -1,4 +1,5 @@
 import { cloneDeep, isEmpty, sum } from 'lodash-es';
+import { PlayerRollsInt, PlayerInt, FrameInt } from '../types/types';
 
 /*
   This module calculates the results in a similar way to how a person would do it:
@@ -28,216 +29,22 @@ import { cloneDeep, isEmpty, sum } from 'lodash-es';
   DONE 9. We return data from previous step.
 */
 
-interface PlayerRollsInt {
-  name: string;
-  rolls: number[];
-};
 
-interface FrameInt {
-  frameId: number;
-  rolls: number[];
-  isStrike: boolean;
-  isSpare: boolean;
-  pointResult: number;
-}
 
-interface PlayerInt {
-  name: string;
-  result: number | null;
-  frames: FrameInt[];
-}
 
-// 
 
-export const isAnyFrameFilled = ( frames :number[][] ) => {
-  const framesToCheck = cloneDeep( frames );
+export const calculateResults = ( playerData: PlayerRollsInt[] ) => {
+  const allPlayerData = cloneDeep( playerData );
+  let allPlayerResults: PlayerInt[] = [];
 
-  if ( isEmpty( framesToCheck.flat() )) return false;
-  else return true;
-};
-
-const isLastFrameOverLimit = ( lastFrame: number[] ) => {
-  const frameToCheck = cloneDeep( lastFrame );
-  let isOverLimit = false;
-  console.log( lastFrame );
-
-  if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
-    console.log( 'Wrong input: Frame #10 is over 30 points.');
-    isOverLimit = true;
-  } 
-
-  return isOverLimit;
-}
-
-const isFrameOverLimit = ( regularFrames: number[] ) => {
-  const frameSums = cloneDeep( regularFrames );
-  let isOverLimit = false;
-
-  frameSums.forEach(element => {
-    if ( element > 10 ) {
-      console.log('Wrong input: one of the frames #1-9 is over 10 points.');
-      isOverLimit = true;      
-    }
+  allPlayerData.forEach( player => {
+    allPlayerResults.push( new Player( player ));
   });
 
-  return isOverLimit;
-}
-
-export const isAnyFrameOverPointLimit = ( frames :number[][] ) => {    
-  const framesToCheck = cloneDeep( frames );
-
-  // We sum rolls in each frame (without bonus points):
-  const frameSums = framesToCheck.map( frame => sum(frame));
-  const lastFrame = frameSums.splice(9);
-
-  const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
-  const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
-
-  const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
-
-  return isOverLimit;
+  return allPlayerResults;
 };
 
-export const isAnyFrameTooLong = ( frames :number[][] ) => {
-  let isTooLong = false;
-  const framesToCheck = cloneDeep( frames );
-
-  for (let i = 0; i < framesToCheck.length; i++) {
-    const frame = framesToCheck[i];
-
-    if ( i < 9) {
-      // Here we check frames 1-9:
-      if (frame.length > 2) isTooLong = true;
-    } else {
-      // Here we check frame 10:
-      if (frame.length > 3) isTooLong = true;
-      if (((frame[0] + frame[1]) < 10) && (frame.length > 2)) isTooLong = true;
-    }
-  }
-
-  return isTooLong;
-}
-
-export const isAnyRollOutOfRange = ( frames :number[][] ) => {
-  let isOutOfRange = false;
-  const rollsToCheck = cloneDeep( frames ).flat();
-  
-  rollsToCheck.forEach( roll => {
-    console.log(roll);
-    
-    if ((roll < 0) || (roll > 10)) {
-      isOutOfRange = true;      
-    }
-  });
-
-  return isOutOfRange;
-};
-
-export const validateFrames = ( frames :number[][] ) => {
-  const framesToCheck = cloneDeep( frames );
-
-  if ( isAnyFrameFilled( framesToCheck ) === false ) return false
-  if ( isAnyRollOutOfRange( framesToCheck ) === true ) return false
-  if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
-  if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
-  else return true;
-};
-
-export const divideIntoFrames = ( arrayToPartition: number[] ) => {
-  let arrayByFrames: number[][] = [];
-  let arrayCopy = cloneDeep( arrayToPartition );
-  let frameNumber = 1;
-
-  for ( let i=0; i<arrayCopy.length; ) {
-    let currentItem = arrayCopy[i];
-    let nextItem = arrayCopy[i+1];
-    let currentFrame: number[] = [];
-
-    if( frameNumber < 10 ) {
-      
-      if ((currentFrame.length === 0) && (currentItem === 10)) {        
-        // Here we handle strikes:
-        arrayByFrames.push( [currentItem] );
-        i++;
-        frameNumber++;
-      } else {     
-        // Here we handle spares and regular rolls:
-        arrayByFrames.push( [currentItem, nextItem].filter(item => item !== undefined) );        
-        i+=2;
-        frameNumber++;
-      };
-
-    } else {
-
-      let remainder = arrayCopy.slice(i);
-      arrayByFrames.push( remainder );
-      break;
-
-    };
-  };
-  
-  return arrayByFrames;
-};
-
-class Frame {
-  frameId: number;
-  rolls: number[];
-  isStrike: boolean;
-  isSpare: boolean;
-  pointResult: number;
-
-  constructor( frameArray: number[][], frameIndex: number ) {
-    const frameArrayCopy = cloneDeep( frameArray );
-
-    const calculateResult = ( allFrames: number[][], frameId: number, isStrike: boolean, isSpare: boolean ) => {
-      const allFramesCopy = cloneDeep( allFrames );
-      const directFramePoints = allFramesCopy[ frameId ].reduce((acc, val) => acc + val, 0 );
-      // let pointResult = 0;
-
-      // On frames 10, 11, 12 we don't count bonus points for strikes & spares:
-      if ( frameId>=9 ) {
-        return directFramePoints;
-      } else {
-        // We need to slice the original array after the current frame.        
-        // Then, we can flatten that array and take 1 or 2 numbers depending on:
-        // - if it's a strike - 2 numbers (if existing),
-        // - if it's a spare - 1 number (if existing).
-        const nextNumbers = allFramesCopy.slice( frameId+1 ).flat(); // Since slice is a non-mutating method, we don't need to copy the array.
-
-        const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
-        const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
-
-        const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
-        const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
-
-        if ( isStrike ) return directFramePoints + nextResult + secondNextResult;
-        else if ( isSpare ) return directFramePoints + nextResult;
-        else return directFramePoints;
-      };
-    };
-
-    this.frameId = frameIndex;
-    this.rolls = frameArray[ frameIndex ];
-    this.isStrike = (( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ));
-    this.isSpare = (( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ));
-    this.pointResult = calculateResult( frameArrayCopy, frameIndex, this.isStrike, this.isSpare );
-  }
-}
-
-export const processFrames = ( partitionedArray: number[][] ) => {
-  const arrayCopy = [...partitionedArray];
-  let resultArray: FrameInt[] = [];
-
-  for ( let i=0; i<arrayCopy.length; i++ ) {
-    resultArray.push(
-      new Frame( arrayCopy, i )
-    );
-  };
-
-  return resultArray;
-}
-
-export class Player {
+class Player {
   name: string;
   result: number | null;
   frames: FrameInt[];
@@ -250,8 +57,7 @@ export class Player {
     let frames: FrameInt[];
 
     // First, we divide rolls into frames:
-    const playerFrames = divideIntoFrames( playerRolls );
-    
+    const playerFrames = divideIntoFrames( playerRolls );    
 
     // Then we validate and process frames:
     const areFramesValid = validateFrames( playerFrames );
@@ -266,17 +72,215 @@ export class Player {
     this.name = playerName;
     this.result = result;
     this.frames = frames;
-  }
-}
+  };
+};
 
-export const getAllPlayerResults = ( playerData: PlayerRollsInt[] ) => {
-  const allPlayerData = cloneDeep( playerData );
-  let allPlayerResults: PlayerInt[] = [];
-  console.log( 'player data is now in results module:', allPlayerData );
+const divideIntoFrames = ( arrayToPartition: number[] ) => {
+  let arrayByFrames: number[][] = [];
+  let arrayCopy = cloneDeep( arrayToPartition );
+  let frameNumber = 1;
 
-  allPlayerData.forEach( player => {
-    allPlayerResults.push( new Player( player ));
+  for ( let i=0; i<arrayCopy.length; ) {
+    let currentItem = arrayCopy[i];
+    let nextItem = arrayCopy[i+1];
+    let currentFrame: number[] = [];
+
+    if( frameNumber < 10 ) {      
+      if ((currentFrame.length === 0) && (currentItem === 10)) {        
+        // Here we handle strikes:
+        arrayByFrames.push( [currentItem] );
+        i++;
+        frameNumber++;
+      } else {     
+        // Here we handle spares and regular rolls:
+        arrayByFrames.push( [currentItem, nextItem].filter(item => item !== undefined) );        
+        i+=2;
+        frameNumber++;
+      };
+
+    } else {
+      let remainder = arrayCopy.slice(i);
+      arrayByFrames.push( remainder );
+      break;
+    };
+  };
+  
+  return arrayByFrames;
+};
+
+const validateFrames = ( frames :number[][] ) => {
+  const framesToCheck = cloneDeep( frames );
+
+  if ( isAnyFrameFilled( framesToCheck ) === false ) return false
+  if ( isAnyRollOutOfRange( framesToCheck ) === true ) return false
+  if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
+  if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
+  else return true;
+};
+
+const isAnyFrameFilled = ( frames :number[][] ) => {
+  const framesToCheck = cloneDeep( frames );
+  if ( isEmpty( framesToCheck.flat() )) return false;
+  else return true;
+};
+
+const isAnyRollOutOfRange = ( frames :number[][] ) => {
+  const rollsToCheck = cloneDeep( frames ).flat();
+  let isOutOfRange = false;  
+  rollsToCheck.forEach( roll => {    
+    if ((roll < 0) || (roll > 10)) isOutOfRange = true;
   });
 
-  return allPlayerResults;
+  return isOutOfRange;
+};
+
+const isAnyFrameOverPointLimit = ( frames :number[][] ) => {    
+  const framesToCheck = cloneDeep( frames );
+
+  // We sum rolls in each frame (without bonus points):
+  const frameSums = framesToCheck.map( frame => sum(frame));
+  const lastFrame = frameSums.splice(9);
+
+  const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
+  const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
+  const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
+
+  return isOverLimit;
+};
+
+const isFrameOverLimit = ( regularFrames: number[] ) => {
+  const frameSums = cloneDeep( regularFrames );
+  let isOverLimit = false;
+
+  frameSums.forEach(element => {
+    if ( element > 10 ) {
+      console.log('Wrong input: one of the frames #1-9 is over 10 points.');
+      isOverLimit = true;      
+    };
+  });
+
+  return isOverLimit;
+};
+
+const isLastFrameOverLimit = ( lastFrame: number[] ) => {
+  const frameToCheck = cloneDeep( lastFrame );
+  let isOverLimit = false;
+  if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
+    console.log( 'Wrong input: Frame #10 is over 30 points.');
+    isOverLimit = true;
+  };
+
+  return isOverLimit;
+};
+
+const isAnyFrameTooLong = ( frames :number[][] ) => {
+  let isTooLong = false;
+  const framesToCheck = cloneDeep( frames );
+  
+  framesToCheck.forEach((frame, i) => {
+    if ( i < 9) {
+      // Here we check frames 1-9:
+      if (frame.length > 2) isTooLong = true;
+    } else {
+      // Here we check frame 10:
+      if (frame.length > 3) isTooLong = true;
+      if (((frame[0] + frame[1]) < 10) && (frame.length > 2)) isTooLong = true;
+    };
+  });
+
+  return isTooLong;
+};
+
+const processFrames = ( partitionedArray: number[][] ) => {
+  const arrayCopy = [...partitionedArray];
+  let resultArray: FrameInt[] = [];
+
+  for ( let i=0; i<arrayCopy.length; i++ ) {
+    resultArray.push(
+      new Frame( arrayCopy, i )
+    );
+  };
+
+  return resultArray;
+};
+
+class Frame {
+  frameId: number;
+  rolls: number[];
+  isStrike: boolean[];
+  isSpare: boolean[];
+  pointResult: number;  
+
+  constructor( frameArray: number[][], frameIndex: number ) {
+    const frameArrayCopy = cloneDeep( frameArray );
+    this.frameId = frameIndex;
+    this.rolls = frameArray[ frameIndex ];
+    this.isStrike = this.checkIfStrike( frameIndex );
+    this.isSpare = this.checkifSpare( frameIndex );
+    this.pointResult = this.calculateResult( frameArrayCopy, frameIndex, this.isStrike, this.isSpare );
+  };
+
+  checkIfStrike ( frameId: number ): boolean[] {
+    if ( frameId>=9 ) {
+      let lastFrameStrikes: boolean[] = [];
+      ( this.rolls[0] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+      (( this.rolls[1] === 10 ) && ( this.rolls[0] !== 0 )) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+      ( this.rolls[2] === 10 ) ? lastFrameStrikes.push(true) : lastFrameStrikes.push(false);
+      
+      return lastFrameStrikes;
+    } else {
+      return [(( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ))];
+    };          
+  };
+
+  checkifSpare ( frameId: number ): boolean[] {
+    if ( frameId>=9 ) {
+      let lastFrameSpares: boolean[] = [];
+      (( this.rolls[0] !== 10 ) && (( this.rolls[0] + this.rolls[1] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
+      (( this.rolls[1] !== 10 ) && (( this.rolls[1] + this.rolls[2] ) === 10 )) ? lastFrameSpares.push(true) : lastFrameSpares.push(false);
+      
+      return lastFrameSpares;
+    } else {
+      return [(( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ))];
+    };          
+  };
+
+  calculateResult ( allFrames: number[][], frameId: number, isStrike: boolean[], isSpare: boolean[] ) {
+    const allFramesCopy = cloneDeep( allFrames );
+    const directFramePoints = allFramesCopy[ frameId ].reduce((acc, val) => acc + val, 0 );
+
+    // On frames 10 we don't count bonus points for strikes & spares:
+    if ( frameId>=9 ) {
+      return directFramePoints;
+    } else {
+      // We need to slice the original array after the current frame.        
+      // Then, we can flatten that array and take 1 or 2 numbers depending on:
+      // - if it's a strike - 2 numbers (if existing),
+      // - if it's a spare - 1 number (if existing).
+      const nextNumbers = allFramesCopy.slice( frameId+1 ).flat();
+
+      const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
+      const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
+
+      const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
+      const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
+
+      if ( isStrike[0] === true ) return directFramePoints + nextResult + secondNextResult;
+      else if ( isSpare[0] === true ) return directFramePoints + nextResult;
+      else return directFramePoints;
+    };
+  };
+};
+
+// Here we export functions & classes that are only for testing.
+// Makes it easier to differentiate private from public module functions.
+export {
+  Player,
+  divideIntoFrames,
+  validateFrames,
+  isAnyFrameFilled,
+  isAnyRollOutOfRange,
+  isAnyFrameOverPointLimit,
+  isAnyFrameTooLong,
+  processFrames,
 };
