@@ -14,12 +14,6 @@ interface PlayerInt {
   frames: FrameInt[];
 }
 
-// DOM Elements
-const tableBody = document.querySelector('.table__body');
-
-console.log(tableBody);
-
-
 const typicalFrameTemplate = ( playerFrames: FrameInt ) => {
   const playerFramesCopy = cloneDeep( playerFrames );
 
@@ -138,8 +132,5 @@ export const displayResults = ( playerData: PlayerInt[] ) => {
 
   const tableRows = createTableRows ( playerDataCopy );
   
-  if ( tableBody !== null ) {
-    tableBody.innerHTML = tableRows;
-  };
-
+  return tableRows;
 };

@@ -267,7 +267,7 @@ export class Player {
   }
 }
 
-export const getAllPlayerResults = ( playerData: PlayerRollsInt[] ) => {
+export const calculateResults = ( playerData: PlayerRollsInt[] ) => {
   const allPlayerData = cloneDeep( playerData );
   let allPlayerResults: PlayerInt[] = [];
   console.log( 'player data is now in results module:', allPlayerData );
