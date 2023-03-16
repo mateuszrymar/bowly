@@ -16,3 +16,7 @@ export interface PlayerInt {
   result: number | null;
   frames: FrameInt[];
 };
+
+export interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}

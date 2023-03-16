@@ -1,57 +1,78 @@
 import './index.css';
-import './results';
-
+// import './modules/results';
+import faviconUrl from "./assets/vite.svg"
+import txtUrl from "./assets/Ten-pin-results-example.txt"
 import { cloneDeep } from 'lodash-es';
-import { processUpload } from './modules/fileUpload';
-import { getAllPlayerResults } from './modules/calculateResults';
+import { readUpload } from './modules/readUpload';
+import { calculateResults } from './modules/calculateResults';
+import { prepareDisplay } from './modules/prepareDisplay';
 import { deepClone } from '@vitest/utils';
-import { PlayerInt, PlayerRollsInt } from './modules/interface';
+import { PlayerInt, PlayerRollsInt, HTMLInputEvent } from './types/types';
 
-// DOM Elements:
+/*
+  The app does 4 things:
+    1. Gets entries from a text file.
+    2. Calculates results.
+    3. Prepares results to be displayed.
+    4. Displays results.
+  Each of these tasks is handled in a separate module.
+
+  Steps 1-3 are handled in index.ts (this file).
+  Step 4 is handled independently by results.ts.
+  This is because the app has 2 pages: index.html and results.html.
+
+  Glossary:
+  "Frame" is one of ten scoring rounds constituting a game.
+  "Roll" is as single throw of a ball.
+  Frames consist of 1,2 or 3 rolls.
+*/
+
+// DOM Elements
 const uploadButton = document.querySelector('.upload__button');
 const uploadInput: HTMLInputElement | null = document.querySelector('.upload__input');
 
-const addUploadListener = () => {  
+
+
+
+
+// Initialization:
+(() => {  
+  // This listener makes our button upload files:
   uploadButton?.addEventListener('click', (event) => {
     event.preventDefault();
     uploadInput?.click();
-  })
-  
-  // @TODO This type check on the event is tricky:
-  uploadInput?.addEventListener('change', async ( event: any ) => {
+  });
+  // This listener starts the whole read-prepare-display sequence:
+  uploadInput?.addEventListener('change', ( event: any ) => {
     event.preventDefault();
-    const uploadedText = processUpload( event );
-    processPlayerEntries( await uploadedText );
-  })
-}
-
-// Initialization:
-(() => {
-  addUploadListener();  
+    getPlayerEntries( event );
+  });
 })();
 
-const saveToSessionStorage = ( data: PlayerInt[] ) => {
+// Step 1: Get entries from a text file.
+async function getPlayerEntries( event: HTMLInputEvent ) {
+  const playerEntries = readUpload( event );
+  processForDisplay( await playerEntries );
+};
+
+// Steps 2 & 3: Calculate results, prepare for display and save:
+const processForDisplay = ( entries: PlayerRollsInt[] ) => {
+  const playerEntries: PlayerRollsInt[] = cloneDeep( entries );  
+  const detailedResults = calculateResults( playerEntries );
+  const tableHtml = prepareDisplay( detailedResults );
+  saveToSessionStorage( tableHtml );
+  
+  // Finally, we switch to results.html:
+  if ( tableHtml !== "" ) redirectToResultsPage();
+};
+
+const saveToSessionStorage = ( data: string ) => {
   const dataCopy = deepClone( data );
   const json = JSON.stringify( dataCopy );
-
   window.sessionStorage.setItem( 'playerResults', json );
-}
+};
 
 const redirectToResultsPage = () => {
-  const newLocation = `${window.location.origin}/results.html`
+  const newLocation = `${window.location.origin}/pages/results.html`;
   window.location.replace(newLocation);
-}
-
-// Here we dispatch data to appropriate modules and functions:
-const processPlayerEntries = ( text: PlayerRollsInt[] ) => {
-  const playerEntries: PlayerRollsInt[] = cloneDeep(text);
-  
-  // Here we'll process text entries into frames
-  const playerResults = getAllPlayerResults( playerEntries );
-
-  // Now we can save player results to sessionstorage
-  saveToSessionStorage( playerResults );
-  
-  // Now we can switch to results.html
-  if ( playerResults.length !== 0 ) redirectToResultsPage();  
-}
+};
