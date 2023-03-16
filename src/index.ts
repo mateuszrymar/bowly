@@ -7,7 +7,7 @@ import { readUpload } from './modules/readUpload';
 import { calculateResults } from './modules/calculateResults';
 import { prepareDisplay } from './modules/prepareDisplay';
 import { deepClone } from '@vitest/utils';
-import { PlayerInt, PlayerRollsInt, HTMLInputEvent } from './types/types';
+import { PlayerRollsInt, HTMLInputEvent } from './types/types';
 
 /*
   The app does 4 things:
@@ -28,8 +28,8 @@ import { PlayerInt, PlayerRollsInt, HTMLInputEvent } from './types/types';
 */
 
 // DOM Elements
-const uploadButton = document.querySelector('.upload__button');
-const uploadInput: HTMLInputElement | null = document.querySelector('.upload__input');
+const uploadButton = document.querySelector('.upload-group__button');
+const uploadInput: HTMLInputElement | null = document.querySelector('.upload-group__input');
 
 
 
@@ -61,8 +61,6 @@ const processForDisplay = ( entries: PlayerRollsInt[] ) => {
   const detailedResults = calculateResults( playerEntries );
   const tableHtml = prepareDisplay( detailedResults );
   saveToSessionStorage( tableHtml );
-  console.log(detailedResults);
-  
   
   // Finally, we switch to results.html:
   if ( tableHtml !== "" ) redirectToResultsPage();

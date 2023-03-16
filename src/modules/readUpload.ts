@@ -12,7 +12,7 @@ import { HTMLInputEvent, PlayerRollsInt } from "../types/types";
 const maxFileSize: number = 1e6; // in bytes.
 
 // DOM Elements
-const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload__file-error-msg')
+const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload-group__file-error-msg')
 
 
 

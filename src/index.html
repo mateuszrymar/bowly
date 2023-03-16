@@ -13,7 +13,7 @@
   <body>
 
     <nav class="navbar">
-      <div class="container">
+      <div class="navbar__wrapper container">
         <h1 class="navbar__heading">
           <a href="index.html">Bowly.</a>
         </h1>
@@ -22,23 +22,23 @@
 
     <main class="upload page container">
 
-      <section class="upload__hero">
-        <h2 class="upload__hero-message text-center">Bowly creates ten-pin bowling scorecards.</h2>
+      <section class="upload-hero">
+        <h2 class="upload-hero__message text-center">Bowly creates ten-pin bowling scorecards.</h2>
       </section>
 
-      <section class="upload__group">
-        <input class="upload__input" type="file" accept=".txt" multiple="false" style="display: none"/>
-        <button class="upload__button">
-          <span class="upload__button-plus">+</span>
-          <div class="upload__button-text-wrapper">
-            <span class="upload__button-text">Upload your file</span>
+      <section class="upload-group">
+        <input class="upload-group__input" type="file" accept=".txt" multiple="false" style="display: none"/>
+        <button class="upload-group__button">
+          <span class="upload-group__button-plus">+</span>
+          <div class="upload-group__button-text-wrapper">
+            <span class="upload-group__button-text">Upload your file</span>
           </div>
         </button>
-        <h4 class="upload__file-error-msg error"></h4>
-        <p class="upload__file-description">
-          We support .txt files<br>
-          not larger than 1mb.<br>
-          <a href="./assets/Ten-pin-results-example.txt" download="Ten-pin-results-example" class="upload__file-description--link">Download example</a>
+        <h4 class="upload-group__file-error-msg error"></h4>
+        <p class="upload-group__file-description">
+          This app supports .txt files.<br>
+          Maximum 1 megabyte.<br>
+          <a href="./assets/Ten-pin-results-example.txt" download="Ten-pin-results-example" class="upload-group__file-description-link"><p>Download example</p></a>
         </p>
       </section>
 

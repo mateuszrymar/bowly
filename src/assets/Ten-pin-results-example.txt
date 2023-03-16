@@ -1,3 +1,14 @@
+// The only DISALLOWED character in the first line is: " , ".
+// The only ALLOWED characters in second line are: "," / "0-10" / " ".
+
+// If there is no valid input in your file, results will not be displayed.
+// If an entry does not match the example above, it will not display at all.
+// Games that are invalid as ten-pin game, but are valid as input, will display but will not be calculated.
+
+// If there is any valid input in your file, it will be displayed.
+// Any games, even unfinished, that are valid as ten-pin game, will be displayed and points will be calculated.
+// Below are valid examples:
+
 Michael Scott
 8, 2, 6, 3, 10, 8, 0, 7, 1, 9, 1, 8, 0, 5, 4, 7, 3, 9, 1, 5
 
