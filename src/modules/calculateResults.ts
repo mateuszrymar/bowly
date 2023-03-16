@@ -1,4 +1,5 @@
 import { cloneDeep, isEmpty, sum } from 'lodash-es';
+import { PlayerRollsInt, PlayerInt, FrameInt } from '../types/types';
 
 /*
   This module calculates the results in a similar way to how a person would do it:
@@ -28,120 +29,52 @@ import { cloneDeep, isEmpty, sum } from 'lodash-es';
   DONE 9. We return data from previous step.
 */
 
-interface PlayerRollsInt {
-  name: string;
-  rolls: number[];
+// 
+
+export const calculateResults = ( playerData: PlayerRollsInt[] ) => {
+
+  const allPlayerData = cloneDeep( playerData );
+  let allPlayerResults: PlayerInt[] = [];
+
+  allPlayerData.forEach( player => {
+    allPlayerResults.push( new Player( player ));
+  });
+
+  return allPlayerResults;
 };
 
-interface FrameInt {
-  frameId: number;
-  rolls: number[];
-  isStrike: boolean;
-  isSpare: boolean;
-  pointResult: number;
-}
-
-interface PlayerInt {
+class Player {
   name: string;
   result: number | null;
   frames: FrameInt[];
-}
 
-// 
+  constructor ( playerData: PlayerRollsInt ) {
+    const singlePlayerData = cloneDeep( playerData );
+    const playerName = singlePlayerData.name;
+    const playerRolls = singlePlayerData.rolls;
+    let result: number | null;
+    let frames: FrameInt[];
 
-export const isAnyFrameFilled = ( frames :number[][] ) => {
-  const framesToCheck = cloneDeep( frames );
+    // First, we divide rolls into frames:
+    const playerFrames = divideIntoFrames( playerRolls );    
 
-  if ( isEmpty( framesToCheck.flat() )) return false;
-  else return true;
-};
-
-const isLastFrameOverLimit = ( lastFrame: number[] ) => {
-  const frameToCheck = cloneDeep( lastFrame );
-  let isOverLimit = false;
-
-  if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
-    console.log( 'Wrong input: Frame #10 is over 30 points.');
-    isOverLimit = true;
-  } 
-
-  return isOverLimit;
-}
-
-const isFrameOverLimit = ( regularFrames: number[] ) => {
-  const frameSums = cloneDeep( regularFrames );
-  let isOverLimit = false;
-
-  frameSums.forEach(element => {
-    if ( element > 10 ) {
-      console.log('Wrong input: one of the frames #1-9 is over 10 points.');
-      isOverLimit = true;      
-    }
-  });
-
-  return isOverLimit;
-}
-
-export const isAnyFrameOverPointLimit = ( frames :number[][] ) => {    
-  const framesToCheck = cloneDeep( frames );
-
-  // We sum rolls in each frame (without bonus points):
-  const frameSums = framesToCheck.map( frame => sum(frame));
-  const lastFrame = frameSums.splice(9);
-
-  const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
-  const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
-
-  const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
-
-  return isOverLimit;
-};
-
-export const isAnyFrameTooLong = ( frames :number[][] ) => {
-  let isTooLong = false;
-  const framesToCheck = cloneDeep( frames );
-
-  for (let i = 0; i < framesToCheck.length; i++) {
-    const frame = framesToCheck[i];
-
-    if ( i < 9) {
-      // Here we check frames 1-9:
-      if (frame.length > 2) isTooLong = true;
+    // Then we validate and process frames:
+    const areFramesValid = validateFrames( playerFrames );
+    if (areFramesValid === true) {
+      frames = processFrames( playerFrames );
+      result = sum(frames.map((frame) => frame.pointResult));
     } else {
-      // Here we check frame 10:
-      if (frame.length > 3) isTooLong = true;
-      if (((frame[0] + frame[1]) < 10) && (frame.length > 2)) isTooLong = true;
+      frames = [];
+      result = null;
     }
-  }
 
-  return isTooLong;
-}
-
-export const isAnyRollOutOfRange = ( frames :number[][] ) => {
-  let isOutOfRange = false;
-  const rollsToCheck = cloneDeep( frames ).flat();
-  
-  rollsToCheck.forEach( roll => {
-    
-    if ((roll < 0) || (roll > 10)) {
-      isOutOfRange = true;      
-    }
-  });
-
-  return isOutOfRange;
+    this.name = playerName;
+    this.result = result;
+    this.frames = frames;
+  };
 };
 
-export const validateFrames = ( frames :number[][] ) => {
-  const framesToCheck = cloneDeep( frames );
-
-  if ( isAnyFrameFilled( framesToCheck ) === false ) return false
-  if ( isAnyRollOutOfRange( framesToCheck ) === true ) return false
-  if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
-  if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
-  else return true;
-};
-
-export const divideIntoFrames = ( arrayToPartition: number[] ) => {
+const divideIntoFrames = ( arrayToPartition: number[] ) => {
   let arrayByFrames: number[][] = [];
   let arrayCopy = cloneDeep( arrayToPartition );
   let frameNumber = 1;
@@ -175,6 +108,109 @@ export const divideIntoFrames = ( arrayToPartition: number[] ) => {
   };
   
   return arrayByFrames;
+};
+
+const validateFrames = ( frames :number[][] ) => {
+
+  const framesToCheck = cloneDeep( frames );
+
+  if ( isAnyFrameFilled( framesToCheck ) === false ) return false
+  if ( isAnyRollOutOfRange( framesToCheck ) === true ) return false
+  if ( isAnyFrameOverPointLimit( framesToCheck ) === true ) return false
+  if ( isAnyFrameTooLong( framesToCheck ) === true ) return false
+  else return true;
+};
+
+const isAnyFrameFilled = ( frames :number[][] ) => {
+
+  const framesToCheck = cloneDeep( frames );
+  if ( isEmpty( framesToCheck.flat() )) return false;
+  else return true;
+};
+
+const isAnyRollOutOfRange = ( frames :number[][] ) => {
+
+  const rollsToCheck = cloneDeep( frames ).flat();
+  let isOutOfRange = false;  
+  rollsToCheck.forEach( roll => {    
+    if ((roll < 0) || (roll > 10)) isOutOfRange = true;
+  });
+
+  return isOutOfRange;
+};
+
+const isAnyFrameOverPointLimit = ( frames :number[][] ) => {    
+  const framesToCheck = cloneDeep( frames );
+
+  // We sum rolls in each frame (without bonus points):
+  const frameSums = framesToCheck.map( frame => sum(frame));
+  const lastFrame = frameSums.splice(9);
+
+  const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
+  const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
+
+  const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
+
+  return isOverLimit;
+};
+
+const isFrameOverLimit = ( regularFrames: number[] ) => {
+  const frameSums = cloneDeep( regularFrames );
+  let isOverLimit = false;
+
+  frameSums.forEach(element => {
+    if ( element > 10 ) {
+      console.log('Wrong input: one of the frames #1-9 is over 10 points.');
+      isOverLimit = true;      
+    }
+  });
+
+  return isOverLimit;
+}
+
+const isLastFrameOverLimit = ( lastFrame: number[] ) => {
+
+  const frameToCheck = cloneDeep( lastFrame );
+  let isOverLimit = false;
+  if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
+    console.log( 'Wrong input: Frame #10 is over 30 points.');
+    isOverLimit = true;
+  } 
+
+  return isOverLimit;
+}
+
+const isAnyFrameTooLong = ( frames :number[][] ) => {
+  let isTooLong = false;
+  const framesToCheck = cloneDeep( frames );
+
+  for (let i = 0; i < framesToCheck.length; i++) {
+    const frame = framesToCheck[i];
+
+    if ( i < 9) {
+      // Here we check frames 1-9:
+      if (frame.length > 2) isTooLong = true;
+    } else {
+      // Here we check frame 10:
+      if (frame.length > 3) isTooLong = true;
+      if (((frame[0] + frame[1]) < 10) && (frame.length > 2)) isTooLong = true;
+    }
+  }
+
+  return isTooLong;
+}
+
+const processFrames = ( partitionedArray: number[][] ) => {
+  const arrayCopy = [...partitionedArray];
+  let resultArray: FrameInt[] = [];
+
+  for ( let i=0; i<arrayCopy.length; i++ ) {
+    resultArray.push(
+      new Frame( arrayCopy, i )
+    );
+  };
+
+  return resultArray;
 };
 
 class Frame {
@@ -219,62 +255,18 @@ class Frame {
     this.isStrike = (( this.rolls.length === 1 ) && ( this.rolls[0] === 10 ));
     this.isSpare = (( this.rolls.length === 2 ) && (( this.rolls[0] + this.rolls[1] ) === 10 ));
     this.pointResult = calculateResult( frameArrayCopy, frameIndex, this.isStrike, this.isSpare );
-  }
-}
-
-export const processFrames = ( partitionedArray: number[][] ) => {
-  const arrayCopy = [...partitionedArray];
-  let resultArray: FrameInt[] = [];
-
-  for ( let i=0; i<arrayCopy.length; i++ ) {
-    resultArray.push(
-      new Frame( arrayCopy, i )
-    );
   };
+};
 
-  return resultArray;
-}
-
-export class Player {
-  name: string;
-  result: number | null;
-  frames: FrameInt[];
-
-  constructor ( playerData: PlayerRollsInt ) {
-    const singlePlayerData = cloneDeep( playerData );
-    const playerName = singlePlayerData.name;
-    const playerRolls = singlePlayerData.rolls;
-    let result: number | null;
-    let frames: FrameInt[];
-
-    // First, we divide rolls into frames:
-    const playerFrames = divideIntoFrames( playerRolls );
-    
-
-    // Then we validate and process frames:
-    const areFramesValid = validateFrames( playerFrames );
-    if (areFramesValid === true) {
-      frames = processFrames( playerFrames );
-      result = sum(frames.map((frame) => frame.pointResult));
-    } else {
-      frames = [];
-      result = null;
-    }
-
-    this.name = playerName;
-    this.result = result;
-    this.frames = frames;
-  }
-}
-
-export const calculateResults = ( playerData: PlayerRollsInt[] ) => {
-  const allPlayerData = cloneDeep( playerData );
-  let allPlayerResults: PlayerInt[] = [];
-  console.log( 'player data is now in results module:', allPlayerData );
-
-  allPlayerData.forEach( player => {
-    allPlayerResults.push( new Player( player ));
-  });
-
-  return allPlayerResults;
+// Here are the exports that are only for testing.
+// Makes it easier to differentiate private from public module functions.
+export {
+  Player,
+  divideIntoFrames,
+  validateFrames,
+  isAnyFrameFilled,
+  isAnyRollOutOfRange,
+  isAnyFrameOverPointLimit,
+  isAnyFrameTooLong,
+  processFrames,
 };

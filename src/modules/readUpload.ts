@@ -5,8 +5,7 @@ import { HTMLInputEvent, PlayerRollsInt } from "../types/types";
   1. Reads a .txt file.
   2. Checks if the file is valid.
   3. If not, the app will stop code execution and display an error.
-     If yes, the app will proceed.
-  
+  4. If file checks are ok, the module returns an array of objects, each with player name and rolls array.
 */
 
 // Variables
@@ -41,6 +40,8 @@ export const readUpload = async (event: HTMLInputEvent ) => {
 
   };
 
+  console.log(namesAndResults);
+  
   return namesAndResults;
 
 };
@@ -148,7 +149,7 @@ const clearUploadError = () => {
 const getNamesAndResults = ( text: string ) => {
 
   const textCopy = `${text}`;
-  const regEx = RegExp(/(?<name>^[^,|\n]+)\n(?<results>[\d|,| |-]+$)/gm);
+  const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| ]+$)/gm);
   const matchArray = [...textCopy.matchAll(regEx)];
   const allPlayerRolls: PlayerRollsInt[] = [];
 
