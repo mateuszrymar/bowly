@@ -1,5 +1,7 @@
 # Live &#8594; https://bowly.netlify.app/
 
+![Bowly-thumbnail](https://user-images.githubusercontent.com/118372766/225638230-815590d7-27e7-4bbe-8c15-a87effa6961e.png)
+
 ## What is Bowly for? 
 Bowly is a website that calculates results of ten-pin bowling games and displays them.
 The goal for this project was to display data in an easy to understand way.
@@ -24,7 +26,7 @@ The goal for this project was to display data in an easy to understand way.
   - Test-Driven Development approach was used on the calculation module. I tested particular functions alongside the whole module (integration test).
 ### Testing
   - Unit tests were automated using Vitest.
-  - Integration tests were performed automatically and manually.
+  - Integration tests were a mix of automatic and manuall approach.
   - End-to-end tests were done manually.
     
 ## Challenges I was faced with
@@ -34,9 +36,8 @@ The goal for this project was to display data in an easy to understand way.
 ## Why I built the project this way
   - I wanted to display the data in a similar 10-frame layout, that most bowling scorecards use. This layout is easy to read and allows for checking results "by eye".
   - I decided two separate views: one for upload, one for display, makes for an optimal User Experience.
-  - Since I decided to not use a framework on this task, there are 2 
-  - I learnt writing automated unit tests.
-  - I wanted to practice unit testing. It turned out, that they're easy to set up and allow to catch tricky errors.
+  - Since I decided to not use a framework on this task, Bowly is a multi-page website. SPAs in vanilla JS require dealing with state changes, which would complicate development with no tangible benefits. Multi-page approach was much simpler to implement.
+  - I wanted to learn writing automated unit tests. It turned out, that they're easy to set up and allow to catch tricky errors.
 
 ## If I had more time, I'd do this
-  - I'd try to use SCSS to reduce the amount of CSS.
+  - I'd try to use SCSS to reduce the amount of CSS code.
