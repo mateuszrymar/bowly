@@ -1,18 +1,28 @@
-// Interfaces
-interface PlayerRolls {
-  name: string;
-  rolls: number[];
-};
-
-interface HTMLInputEvent extends Event {
-  target: HTMLInputElement & EventTarget;
-}
+import { HTMLInputEvent, PlayerRollsInt } from "../types/types";
 
 // Variables
 const maxFileSize: number = 1e6; // in bytes.
 const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload__file-error-msg')
 
 // Functions
+
+// This is the main function:
+export const readUpload = async (event: HTMLInputEvent ) => {
+  console.log('passed to processUpload', event.target?.files );
+  const files: any = event.target?.files;
+  let file: File;
+  
+  if ( files[0] ) { 
+    file = files[0]
+    const result = getFileFromInput( file );
+    console.log(result);    
+    const namesAndResults = validateUploadedFile( await result, file);
+    console.log(namesAndResults);    
+
+    return namesAndResults;
+  } else return [];
+}
+
 const getFileFromInput = (file: File): Promise<any> => {
 
   return new Promise(function (resolve, reject) {
@@ -29,7 +39,7 @@ const getNamesAndResults = ( text: string ) => {
   const textCopy = `${text}`;
   const regEx = RegExp(/(?<name>^[^,|\n]+)\n(?<results>[\d|,| |-]+$)/gm);
   const matchArray = [...textCopy.matchAll(regEx)];
-  const allPlayerRolls: PlayerRolls[] = [];
+  const allPlayerRolls: PlayerRollsInt[] = [];
 
   matchArray.forEach(element => {
     allPlayerRolls.push({ 
@@ -106,18 +116,3 @@ const validateUploadedFile = ( text: string, file: File ) => {
   return matches;
 }
 
-export const processUpload = async (event: HTMLInputEvent ) => {
-  console.log('passed to processUpload', event.target?.files );
-  const files: any = event.target?.files;
-  let file: File;
-  
-  if ( files[0] ) { 
-    file = files[0]
-    const result = getFileFromInput( file );
-    console.log(result);    
-    const namesAndResults = validateUploadedFile( await result, file);
-    console.log(namesAndResults);    
-
-    return namesAndResults;
-  } else return [];
-}

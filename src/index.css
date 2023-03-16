@@ -1,17 +1,18 @@
 * {
   /* For debugging only */
   /* outline: 1px solid red; */
+
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;
 }
 
-:root {
-  
+:root {  
 
   --document-font: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-family: var(--document-font);
 
+  /* Color library */
   --white-000: rgba(255, 255, 255, 1);
   --white-050: rgba(251, 251, 253, 1);
   --white-100: rgba(245, 245, 247, 1);
@@ -34,8 +35,12 @@
   --green-600: rgba(130, 184, 15, 1);
   --red-600: rgba(212, 89, 81, 1);
 
+  /* Document styles */
+  --background: var(--white-100);
+  color: var(--grey-700);
+  background-color: var(--background);
+
   /* Text-size styles */
-  /* base size: body (19px) */
   --heading-1: 3.79rem;
   --heading-2: 3.16rem;
   --heading-3: 2.53rem;
@@ -44,11 +49,6 @@
   --heading-6: 1.11rem;
   --body: 1rem;
   font-size: 19px;
-
-  /* Document styles */
-  --background: var(--white-100);
-  color: var(--grey-700);
-  background-color: var(--background);
 
   /* Size Variables */
   --navbar-height: 80px;
@@ -84,7 +84,6 @@ h4 {
 p {
   margin: 0;
 }
-
 
 /* Navbar */
 .navbar {

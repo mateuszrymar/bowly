@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./index.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    </style>
+    <title>Bowly</title>
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <div class="container">
+        <h1 class="navbar__heading">
+          <a href="index.html">Bowly.</a>
+        </h1>
+      </div>
+    </nav>
+
+    <main class="upload page container">
+
+      <section class="upload__hero">
+        <h2 class="upload__hero-message text-center">Bowly creates ten-pin bowling scorecards.</h2>
+      </section>
+
+      <section class="upload__group">
+        <input class="upload__input" type="file" accept=".txt" multiple="false" style="display: none"/>
+        <button class="upload__button">
+          <span class="upload__button-plus">+</span>
+          <div class="upload__button-text-wrapper">
+            <span class="upload__button-text">Upload your file</span>
+          </div>
+        </button>
+        <h4 class="upload__file-error-msg error"></h4>
+        <p class="upload__file-description">
+          We support .txt files<br>
+          not larger than 1mb.<br>
+          <a href="./assets/Ten-pin-results-example.txt" download="Ten-pin-results-example" class="upload__file-description--link">Download example</a>
+        </p>
+      </section>
+
+    </main>
+
+    <script type="module" src="/index.ts"></script>
+  </body>
+</html>

@@ -1,21 +1,29 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
-const __dirname = 'D:/coding/230313_bowly'
+const root = resolve(__dirname, 'src');
+const outDir = resolve(__dirname, 'dist');
+// const __dirname = './src/'
 
 export default defineConfig({
+  root,
   assetsInclude: [
-    // '**/*.html',
-    // '**/*.ts',
-    // '**/*.css',
     '**/*.txt',
+    '**/*.svg',
   ],
   build: {
+    outDir,
+    emptyOutDir: false,
+    build: {
+      assetsInlineLimit: '0' // kb
+    },
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        nested: resolve(__dirname, 'results.html'),
+        main: resolve(root, 'index.html'),
+        results: resolve(root, 'pages', 'results.html'),
       },
     },
+    publicDir: resolve(root, 'assets'),
   },
+  
 })

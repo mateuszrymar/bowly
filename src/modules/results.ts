@@ -1,4 +1,4 @@
-import { displayResults } from './modules/displayResults';
+import { displayResults } from './displayResults';
 
 
 interface FrameInt {
