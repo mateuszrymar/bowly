@@ -5,7 +5,7 @@ import txtUrl from "./assets/Ten-pin-results-example.txt"
 import { cloneDeep } from 'lodash-es';
 import { readUpload } from './modules/readUpload';
 import { calculateResults } from './modules/calculateResults';
-import { displayResults } from './modules/displayResults';
+import { prepareDisplay } from './modules/prepareDisplay';
 import { deepClone } from '@vitest/utils';
 import { PlayerInt, PlayerRollsInt, HTMLInputEvent } from './types/types';
 
@@ -37,7 +37,6 @@ const uploadInput: HTMLInputElement | null = document.querySelector('.upload__in
 
 // Initialization:
 (() => {  
-
   // This listener makes our button upload files:
   uploadButton?.addEventListener('click', (event) => {
     event.preventDefault();
@@ -48,41 +47,32 @@ const uploadInput: HTMLInputElement | null = document.querySelector('.upload__in
     event.preventDefault();
     getPlayerEntries( event );
   });
-
 })();
 
 // Step 1: Get entries from a text file.
 async function getPlayerEntries( event: HTMLInputEvent ) {
-
   const playerEntries = readUpload( event );
   processForDisplay( await playerEntries );
-
 };
 
 // Steps 2 & 3: Calculate results, prepare for display and save:
-function processForDisplay ( entries: PlayerRollsInt[] ) {
-
+const processForDisplay = ( entries: PlayerRollsInt[] ) => {
   const playerEntries: PlayerRollsInt[] = cloneDeep( entries );  
   const detailedResults = calculateResults( playerEntries );
-  const tableHtml = displayResults( detailedResults );
+  const tableHtml = prepareDisplay( detailedResults );
   saveToSessionStorage( tableHtml );
   
   // Finally, we switch to results.html:
   if ( tableHtml !== "" ) redirectToResultsPage();
+};
 
-}
-
-function saveToSessionStorage( data: string ) {
-
+const saveToSessionStorage = ( data: string ) => {
   const dataCopy = deepClone( data );
   const json = JSON.stringify( dataCopy );
   window.sessionStorage.setItem( 'playerResults', json );
+};
 
-}
-
-function redirectToResultsPage() {
-
+const redirectToResultsPage = () => {
   const newLocation = `${window.location.origin}/pages/results.html`;
   window.location.replace(newLocation);
-
-}
+};

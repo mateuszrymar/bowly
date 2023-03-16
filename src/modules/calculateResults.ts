@@ -29,10 +29,11 @@ import { PlayerRollsInt, PlayerInt, FrameInt } from '../types/types';
   DONE 9. We return data from previous step.
 */
 
-// 
+
+
+
 
 export const calculateResults = ( playerData: PlayerRollsInt[] ) => {
-
   const allPlayerData = cloneDeep( playerData );
   let allPlayerResults: PlayerInt[] = [];
 
@@ -84,8 +85,7 @@ const divideIntoFrames = ( arrayToPartition: number[] ) => {
     let nextItem = arrayCopy[i+1];
     let currentFrame: number[] = [];
 
-    if( frameNumber < 10 ) {
-      
+    if( frameNumber < 10 ) {      
       if ((currentFrame.length === 0) && (currentItem === 10)) {        
         // Here we handle strikes:
         arrayByFrames.push( [currentItem] );
@@ -99,11 +99,9 @@ const divideIntoFrames = ( arrayToPartition: number[] ) => {
       };
 
     } else {
-
       let remainder = arrayCopy.slice(i);
       arrayByFrames.push( remainder );
       break;
-
     };
   };
   
@@ -111,7 +109,6 @@ const divideIntoFrames = ( arrayToPartition: number[] ) => {
 };
 
 const validateFrames = ( frames :number[][] ) => {
-
   const framesToCheck = cloneDeep( frames );
 
   if ( isAnyFrameFilled( framesToCheck ) === false ) return false
@@ -122,14 +119,12 @@ const validateFrames = ( frames :number[][] ) => {
 };
 
 const isAnyFrameFilled = ( frames :number[][] ) => {
-
   const framesToCheck = cloneDeep( frames );
   if ( isEmpty( framesToCheck.flat() )) return false;
   else return true;
 };
 
 const isAnyRollOutOfRange = ( frames :number[][] ) => {
-
   const rollsToCheck = cloneDeep( frames ).flat();
   let isOutOfRange = false;  
   rollsToCheck.forEach( roll => {    
@@ -148,7 +143,6 @@ const isAnyFrameOverPointLimit = ( frames :number[][] ) => {
 
   const isFrameOverPointLimit = isFrameOverLimit( frameSums );  
   const isLastFrameOverPointLimit = isLastFrameOverLimit( lastFrame );
-
   const isOverLimit: boolean = (isLastFrameOverPointLimit || isFrameOverPointLimit);
 
   return isOverLimit;
@@ -162,23 +156,22 @@ const isFrameOverLimit = ( regularFrames: number[] ) => {
     if ( element > 10 ) {
       console.log('Wrong input: one of the frames #1-9 is over 10 points.');
       isOverLimit = true;      
-    }
+    };
   });
 
   return isOverLimit;
-}
+};
 
 const isLastFrameOverLimit = ( lastFrame: number[] ) => {
-
   const frameToCheck = cloneDeep( lastFrame );
   let isOverLimit = false;
   if ((frameToCheck[0] !== undefined) && (frameToCheck[0] > 30)) {
     console.log( 'Wrong input: Frame #10 is over 30 points.');
     isOverLimit = true;
-  } 
+  };
 
   return isOverLimit;
-}
+};
 
 const isAnyFrameTooLong = ( frames :number[][] ) => {
   let isTooLong = false;
@@ -194,11 +187,11 @@ const isAnyFrameTooLong = ( frames :number[][] ) => {
       // Here we check frame 10:
       if (frame.length > 3) isTooLong = true;
       if (((frame[0] + frame[1]) < 10) && (frame.length > 2)) isTooLong = true;
-    }
-  }
+    };
+  };
 
   return isTooLong;
-}
+};
 
 const processFrames = ( partitionedArray: number[][] ) => {
   const arrayCopy = [...partitionedArray];
@@ -236,7 +229,7 @@ class Frame {
         // Then, we can flatten that array and take 1 or 2 numbers depending on:
         // - if it's a strike - 2 numbers (if existing),
         // - if it's a spare - 1 number (if existing).
-        const nextNumbers = allFramesCopy.slice( frameId+1 ).flat(); // Since slice is a non-mutating method, we don't need to copy the array.
+        const nextNumbers = allFramesCopy.slice( frameId+1 ).flat();
 
         const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
         const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
@@ -258,7 +251,7 @@ class Frame {
   };
 };
 
-// Here are the exports that are only for testing.
+// Here we export functions & classes that are only for testing.
 // Makes it easier to differentiate private from public module functions.
 export {
   Player,

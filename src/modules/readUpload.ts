@@ -19,7 +19,6 @@ const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.uplo
 
 
 export const readUpload = async (event: HTMLInputEvent ) => {
-
   const files: FileList | null = event.target?.files;
   let file: File;
   let namesAndResults: PlayerRollsInt[] = [];
@@ -39,15 +38,11 @@ export const readUpload = async (event: HTMLInputEvent ) => {
     return displayUploadError( errorMessage );
 
   };
-
-  console.log(namesAndResults);
   
   return namesAndResults;
-
 };
 
 const getFileFromInput = (file: File): Promise<any> => {
-
   return new Promise(function (resolve, reject) {
       const reader = new FileReader();
       reader.onerror = reject;
@@ -56,11 +51,9 @@ const getFileFromInput = (file: File): Promise<any> => {
       };
       reader.readAsText(file);
   });
-
 };
 
 const validateFile = ( text: string, file: File ) => {  
-
   let isValid: boolean;
   
   // This is only basic validation.
@@ -68,15 +61,13 @@ const validateFile = ( text: string, file: File ) => {
   const isSizeValid = checkFileSize( file );
   const isExtensionValid = checkFileExtension( file );
   const isAnyMatch = checkMatches( text );
-
   isValid = (isSizeValid && isExtensionValid && isAnyMatch);
-  return isValid;
 
+  return isValid;
 };
 
 // @TODO check if three "check..." functions can be merged into one. There's a bit of repetition.
 const checkFileSize = ( file: File ) => {
-
   const errorMessage = "File's too large.";
   let isValid: boolean;
   
@@ -89,11 +80,9 @@ const checkFileSize = ( file: File ) => {
   }
 
   return isValid;
-
 };
 
 const checkFileExtension = ( file: File ) => {
-
   const extension = file.name.split('.')[1];
   const errorMessage = "Wrong extension.";
   let isValid: boolean;
@@ -107,11 +96,9 @@ const checkFileExtension = ( file: File ) => {
   };
 
   return isValid;
-
-}
+};
 
 const checkMatches = ( text: string ) => {
-
   const errorMessage = "No matching names and results found.";
   const matches = getNamesAndResults( text );
   let isValid: boolean;
@@ -126,11 +113,9 @@ const checkMatches = ( text: string ) => {
   };
 
   return isValid;
-
 };
 
 const displayUploadError = ( message: string ): never => {
-
   if ( errorMessageBox !== null ) {
     errorMessageBox.innerHTML = message;
   };
@@ -139,15 +124,12 @@ const displayUploadError = ( message: string ): never => {
 };
 
 const clearUploadError = () => {
-
   if ( errorMessageBox !== null ) {
     errorMessageBox.innerHTML = ``;
   } else return;
-
 };
 
 const getNamesAndResults = ( text: string ) => {
-
   const textCopy = `${text}`;
   const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| ]+$)/gm);
   const matchArray = [...textCopy.matchAll(regEx)];
@@ -164,5 +146,4 @@ const getNamesAndResults = ( text: string ) => {
   });
   
   return allPlayerRolls;
-
 };
