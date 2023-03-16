@@ -6,6 +6,7 @@ import { HTMLInputEvent, PlayerRollsInt } from "../types/types";
   2. Checks if the file is valid.
   3. If not, the app will stop code execution and display an error.
      If yes, the app will proceed.
+  
 */
 
 // Variables
@@ -20,23 +21,28 @@ const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.uplo
 
 export const readUpload = async (event: HTMLInputEvent ) => {
 
-  // @TODO Try to avoid this "any":
-  const files: any = event.target?.files;
+  const files: FileList | null = event.target?.files;
   let file: File;
+  let namesAndResults: PlayerRollsInt[] = [];
   
-  if ( files[0] ) { 
+  if ( (files !== null) && files[0] ) { 
+
+    const errorMessage = "File is invalid.";
     file = files[0]
+
     const result = getFileFromInput( file );
     const isValid = validateFile( await result, file);
-    let namesAndResults: PlayerRollsInt[];
+    isValid ? namesAndResults = getNamesAndResults( await result ) : displayUploadError( errorMessage );
 
-    isValid ? namesAndResults = getNamesAndResults( await result ) : namesAndResults = [];
+  } else { 
 
-    return namesAndResults;
-  } else return [];
-  // @TODO I don't like returning empty arrays like that. ^
-  // It's better to throw and display errors! Rewrite that!
-  
+    const errorMessage = "No file uploaded.";    
+    return displayUploadError( errorMessage );
+
+  };
+
+  return namesAndResults;
+
 };
 
 const getFileFromInput = (file: File): Promise<any> => {
@@ -67,15 +73,15 @@ const validateFile = ( text: string, file: File ) => {
 
 };
 
+// @TODO check if three "check..." functions can be merged into one. There's a bit of repetition.
 const checkFileSize = ( file: File ) => {
 
-  const message = "File's too large.";
+  const errorMessage = "File's too large.";
   let isValid: boolean;
   
   if ( file.size > maxFileSize ) {
-    displayUploadError( message );
     isValid = false;
-    throw new Error( message );
+    displayUploadError( errorMessage );
   } else {
     console.log( `The file size is ${file.size}b. OK.` );
     isValid = true;
@@ -86,53 +92,58 @@ const checkFileSize = ( file: File ) => {
 };
 
 const checkFileExtension = ( file: File ) => {
+
   const extension = file.name.split('.')[1];
-  const message = "Wrong extension.";
+  const errorMessage = "Wrong extension.";
   let isValid: boolean;
 
   if ( extension !== 'txt' ) {
-    displayUploadError( message );
     isValid = false;
-    throw new Error( message );
+    displayUploadError( errorMessage );
   } else {
     console.log( `The file extension is ${extension}. OK.` );
     isValid = true;
   };
 
   return isValid;
+
 }
 
 const checkMatches = ( text: string ) => {
+
   const errorMessage = "No matching names and results found.";
   const matches = getNamesAndResults( text );
   let isValid: boolean;
 
   if ( matches.length <= 0) {
-    displayUploadError( errorMessage );
     isValid = false;
-    throw new Error( errorMessage );
+    displayUploadError( errorMessage );
   } else {
     console.log( `Found ${matches.length} matches. OK.` );
     isValid = true;
     clearUploadError();
-  }
+  };
 
   return isValid;
-}
 
-const displayUploadError = ( message: string ) => {
+};
+
+const displayUploadError = ( message: string ): never => {
 
   if ( errorMessageBox !== null ) {
     errorMessageBox.innerHTML = message;
-  } else return;
+  };
   
-}
+  throw new Error( message );
+};
 
 const clearUploadError = () => {
+
   if ( errorMessageBox !== null ) {
     errorMessageBox.innerHTML = ``;
   } else return;
-}
+
+};
 
 const getNamesAndResults = ( text: string ) => {
 
@@ -154,14 +165,3 @@ const getNamesAndResults = ( text: string ) => {
   return allPlayerRolls;
 
 };
-
-
-
-
-
-
-
-
-
-
-
