@@ -50,7 +50,7 @@ const uploadInput: HTMLInputElement | null = document.querySelector('.upload-gro
 })();
 
 // Step 1: Get entries from a text file.
-async function getPlayerEntries( event: HTMLInputEvent ) {
+const getPlayerEntries = async ( event: HTMLInputEvent ) => {
   const playerEntries = readUpload( event );
   processForDisplay( await playerEntries );
 };
@@ -63,7 +63,7 @@ const processForDisplay = ( entries: PlayerRollsInt[] ) => {
   saveToSessionStorage( tableHtml );
   
   // Finally, we switch to results.html:
-  // if ( tableHtml !== "" ) redirectToResultsPage();
+  if ( tableHtml !== "" ) redirectToResultsPage();
 };
 
 const saveToSessionStorage = ( data: string ) => {

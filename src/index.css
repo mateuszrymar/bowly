@@ -287,6 +287,9 @@ button {
   width: 100%;
   color: var(--grey-500);
 }
+tr:hover {
+  box-shadow:  0 0 5px var(--grey-300);
+}
 .roll {  
   position: relative;
   display: flex;
@@ -303,8 +306,26 @@ button {
   align-items: center;
   font-size: 1.47rem;
 }
-tr:hover {
-  box-shadow:  0 0 5px var(--grey-300);
+/* Special roll indicators */
+.strike, .spare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  mix-blend-mode: multiply;
+}
+.strike {
+  width: 100%;
+  height: 100%;
+  background-color: var(--grey-300-transparent);
+}
+.spare {
+  bottom: 0;
+  width: 0; 
+  height: 0; 
+  border-left: 0.845rem solid transparent;
+  border-right: 0.845rem solid var(--grey-300-transparent);
+  border-top: 0.845rem solid transparent;  
+  border-bottom: 0.845rem solid var(--grey-300-transparent);
 }
 
 /* Footer */
@@ -317,29 +338,7 @@ tr:hover {
   background-color: var(--white-150);
 }
 
-/* Special roll indicators */
-.strike {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: var(--grey-300-transparent);
-  mix-blend-mode: multiply;
-}
-.spare {
-  position: absolute;
-  bottom: 0;
-  left:0;
-  width: 0; 
-  height: 0; 
-  border-left: 0.845rem solid transparent;
-  border-right: 0.845rem solid var(--grey-300-transparent);
-  border-top: 0.845rem solid transparent;  
-  border-bottom: 0.845rem solid var(--grey-300-transparent);
-  mix-blend-mode: multiply;
-}
-
+/* Container */
 .container {
   width: 100%;
   margin: 0 auto;
@@ -356,7 +355,7 @@ tr:hover {
     padding: 0 1rem;
   }
 }
-@media (min-width: 640px) {
+@media (min-width: 641px) {
   :root{
     font-size: 16px;
   }
