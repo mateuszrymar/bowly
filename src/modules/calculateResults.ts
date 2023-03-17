@@ -27,6 +27,7 @@ import { PlayerRollsInt, PlayerInt, FrameInt } from '../types/types';
     - Frames with individual frame results.
     - Are results valid? - this info can be passed as a null result, doesn't require a separate field.
   DONE 9. We return data from previous step.
+  Thanks to this approach, we get individual frame counts, strikes, and spares, which we'll display to make results more readable.
 */
 
 
@@ -56,10 +57,8 @@ class Player {
     let result: number | null;
     let frames: FrameInt[];
 
-    // First, we divide rolls into frames:
+    // We divide rolls into frames, then we validate and process frames:
     const playerFrames = divideIntoFrames( playerRolls );    
-
-    // Then we validate and process frames:
     const areFramesValid = validateFrames( playerFrames );
     if (areFramesValid === true) {
       frames = processFrames( playerFrames );
@@ -260,13 +259,13 @@ class Frame {
       const nextNumbers = allFramesCopy.slice( frameId+1 ).flat();
 
       const checkFirstNextResult: (number | undefined) = nextNumbers.at(0);
-      const nextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
+      const firstNextResult: number = ( checkFirstNextResult === undefined ) ? 0 : checkFirstNextResult;
 
       const checkSecondNextResult: (number | undefined) = nextNumbers.at(1);
       const secondNextResult: number = ( checkSecondNextResult === undefined ) ? 0 : checkSecondNextResult;
 
-      if ( isStrike[0] === true ) return directFramePoints + nextResult + secondNextResult;
-      else if ( isSpare[0] === true ) return directFramePoints + nextResult;
+      if ( isStrike[0] === true ) return directFramePoints + firstNextResult + secondNextResult;
+      else if ( isSpare[0] === true ) return directFramePoints + firstNextResult;
       else return directFramePoints;
     };
   };
