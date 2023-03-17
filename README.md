@@ -6,11 +6,11 @@
   1. Download the latest release: https://github.com/mateuszrymar/bowly/releases/tag/v1.1.0
   2. Unpack to a directory of your choice.
   3. Load that directory in the code editor.
-  4. In the project directory, open the console and run: 
+  4. In the project directory, run the terminal and run: 
 
 ### `npm install` & `npm run dev`
 
-  5. Click the link in the console to run the app in development mode.
+  5. Click the link displayed in the console to run the app in development mode.
 
 ## What is Bowly for? 
 Bowly is a website that calculates results of ten-pin bowling games and displays them.
