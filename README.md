@@ -3,7 +3,7 @@
 ![Bowly-thumbnail](https://user-images.githubusercontent.com/118372766/225638230-815590d7-27e7-4bbe-8c15-a87effa6961e.png)
 
 ## To run the project locally:
-  1. Download the latest release: https://github.com/mateuszrymar/bowly/releases/tag/v1.0.0
+  1. Download the latest release: https://github.com/mateuszrymar/bowly/releases/tag/v1.1.0
   2. Unpack to a directory of your choice.
   3. Load that directory in the code editor.
   4. In the project directory, open the console and run: 
