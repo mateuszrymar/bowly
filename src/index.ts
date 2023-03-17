@@ -63,7 +63,7 @@ const processForDisplay = ( entries: PlayerRollsInt[] ) => {
   saveToSessionStorage( tableHtml );
   
   // Finally, we switch to results.html:
-  if ( tableHtml !== "" ) redirectToResultsPage();
+  // if ( tableHtml !== "" ) redirectToResultsPage();
 };
 
 const saveToSessionStorage = ( data: string ) => {

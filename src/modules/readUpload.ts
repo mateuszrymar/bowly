@@ -10,6 +10,11 @@ import { HTMLInputEvent, PlayerRollsInt } from "../types/types";
 
 // Variables
 const maxFileSize: number = 1e6; // in bytes.
+const searchRegEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| ]+$)/gm); 
+// Name and results must be applied in this order on two neighbouring lines.
+// Name can have any characters, except a comma.
+// Results can have only digits, commas or spaces.
+// If any of the above is not true, the entry will not be read.
 
 // DOM Elements
 const errorMessageBox: HTMLHeadingElement | null = document.querySelector('.upload-group__file-error-msg')
@@ -30,7 +35,7 @@ export const readUpload = async (event: HTMLInputEvent ) => {
 
     const result = getFileFromInput( file );
     const isValid = validateFile( await result, file);
-    isValid ? namesAndResults = getNamesAndResults( await result ) : displayUploadError( errorMessage );
+    isValid ? namesAndResults = getNamesAndResults( await result, searchRegEx ) : displayUploadError( errorMessage );
 
   } else { 
 
@@ -66,54 +71,40 @@ const validateFile = ( text: string, file: File ) => {
   return isValid;
 };
 
-// @TODO check if three "check..." functions can be merged into one. There's a bit of repetition.
 const checkFileSize = ( file: File ) => {
   const errorMessage = "File's too large.";
-  let isValid: boolean;
-  
-  if ( file.size > maxFileSize ) {
-    isValid = false;
-    displayUploadError( errorMessage );
-  } else {
-    console.log( `The file size is ${file.size}b. OK.` );
-    isValid = true;
-  }
-
-  return isValid;
+  const successMessage = `The file size is ${file.size}b. OK.`;
+  return check ( file.size > maxFileSize, errorMessage, successMessage );;
 };
 
 const checkFileExtension = ( file: File ) => {
   const extension = file.name.split('.')[1];
   const errorMessage = "Wrong extension.";
-  let isValid: boolean;
-
-  if ( extension !== 'txt' ) {
-    isValid = false;
-    displayUploadError( errorMessage );
-  } else {
-    console.log( `The file extension is ${extension}. OK.` );
-    isValid = true;
-  };
-
-  return isValid;
+  const successMessage = `The file extension is ${extension}. OK.`;
+  return check ( extension !== 'txt', errorMessage, successMessage );;
 };
 
 const checkMatches = ( text: string ) => {
+  const matches = getNamesAndResults( text, searchRegEx );
   const errorMessage = "No matching names and results found.";
-  const matches = getNamesAndResults( text );
+  const successMessage = `Found ${matches.length} matches. OK.`;
+  return check ( matches.length <= 0, errorMessage, successMessage );
+};
+
+const check = ( testCondition: boolean, errorMessage: string, successMessage: string ): boolean => {
   let isValid: boolean;
 
-  if ( matches.length <= 0) {
+  if ( testCondition ) {
     isValid = false;
     displayUploadError( errorMessage );
   } else {
-    console.log( `Found ${matches.length} matches. OK.` );
+    console.log( `${successMessage}` );
     isValid = true;
     clearUploadError();
   };
 
   return isValid;
-};
+}
 
 const displayUploadError = ( message: string ): never => {
   if ( errorMessageBox !== null ) {
@@ -129,9 +120,8 @@ const clearUploadError = () => {
   } else return;
 };
 
-const getNamesAndResults = ( text: string ) => {
-  const textCopy = `${text}`;
-  const regEx = RegExp(/(?<name>^[^,|\n]+)\r\n(?<results>[\d|,| ]+$)/gm);
+const getNamesAndResults = ( text: string, regEx: RegExp ) => {
+  const textCopy = `${text}`;  
   const matchArray = [...textCopy.matchAll(regEx)];
   const allPlayerRolls: PlayerRollsInt[] = [];
 

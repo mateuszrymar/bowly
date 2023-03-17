@@ -27,6 +27,7 @@ import { PlayerRollsInt, PlayerInt, FrameInt } from '../types/types';
     - Frames with individual frame results.
     - Are results valid? - this info can be passed as a null result, doesn't require a separate field.
   DONE 9. We return data from previous step.
+  Thanks to this approach, we get individual frame counts, strikes, and spares, which we'll display to make results more readable.
 */
 
 
